@@ -33,13 +33,7 @@
         - 한 줄 당 글자 수: 100자 안내선  
         - 공백 문자를 흐릿하게 표시
     - 워크스페이스 
-        - 문자집합 : UTF-8코딩, 압축, 디코더
-- 컴파일 방식과 인터프리터 방식
-- hello.c 컴파일 및 실행 실습
-- JRE 설치
-- 바이트코드 프로그래밍 실습(HelloWorld.class)
-- OpenJDK 11 설치
-- Hello.java 컴파일 및 실행 실습
+        - 문자집합 : UTF-8
     - Java / JRE 
         - OpenJDK 11 버전으로 설정
         - 단, 회사에서 JDK8을 사용한다면 8로 설정하라.
@@ -70,13 +64,6 @@
 - git 서버 업로드
     - 1) 관리 명단에 등록: 
         - bitcamp-java-2018-12$ git add .
-    - 2) 명단에 등록된 파일 및 디렉토리 백업: 
-        - bitcamp-java-2018-12$ git commit -m "메시지"
-    - 3) 깃 서버에 업로드: 
-        - bitcamp-java-2018-12$ git push 
-- git 저장소 복제
-    - git$ git clone https://github.com/아이디/저장소.git
-    - git$ git clone https://github.com/아이디/저장소.git 다른디렉토리명        - bitcamp-java-2018-12$ git add .
     - 2) 명단에 등록된 파일 및 디렉토리 백업: 
         - bitcamp-java-2018-12$ git commit -m "메시지"
     - 3) 깃 서버에 업로드: 

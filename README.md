@@ -71,3 +71,16 @@
 - git 저장소 복제
     - git$ git clone https://github.com/아이디/저장소.git
     - git$ git clone https://github.com/아이디/저장소.git 다른디렉토리명
+----------------------------------------------------------
+1. java-project 디렉토리를 만들라.
+mkdir [디렉토리명]
+
+2. 이 디렉토리를 자바 프로젝트 폴더로 초기화 시켜라.(- 기본 패키지 : bitcamp.lms)
+gradle init --type java-application
+1 -> 1 -> 프로젝트명 -> 패키지명
+
+3. 이클립스 설정 파일을 준비하라.
+gradle 들어가서 id 'eclipse' 추가
+
+4. 이클립스로 임포트하라
+----------------------------------------------------------

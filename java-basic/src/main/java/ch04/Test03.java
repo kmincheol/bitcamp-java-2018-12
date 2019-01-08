@@ -16,7 +16,6 @@ public class Test03 {
     //    (새로 만들 메모리의 타입) 값
     // => 다음과 같이 개발자가 형변환을 명시하는 경우,
     //    "명시적 형변환(explicit type conversion(casting)"이라 부른다.
-    //
     float r2 = (float)5 / (float)2;
     // float 타입의 임시 메모리가 생성된 후 정수 5가 저장된다.
     // float 타입의 임시 메모리가 생성된 후 정수 2가 저장된다.

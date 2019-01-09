@@ -8,8 +8,8 @@ public class App3 {
     java.util.Scanner keyboard = new java.util.Scanner(System.in);
     Date createdDate = new Date(System.currentTimeMillis());
 
-    int index = 1;
-    int indexPrint = 1;
+    int index = 0;
+    int indexPrint = 0;
 
     int[] num = new int[20];
     String[] contents = new String[20];

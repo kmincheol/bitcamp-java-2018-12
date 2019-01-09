@@ -7,8 +7,8 @@ public class App {
   public static void main(String[] args) {
     java.util.Scanner keyboard = new java.util.Scanner(System.in);
 
-    int index = 1;
-    int indexprint = 1;
+    int index = 0;
+    int indexprint = 0;
 
     int[] num = new int[100];
     String[] className = new String[100];
@@ -35,18 +35,20 @@ public class App {
       System.out.print("일수업시간? ");
       totalDay[index] = keyboard.nextInt();
 
-      System.out.print("계속 입력하시겠습니까?(Y/n)");
+      System.out.print("\n계속 입력하시겠습니까?(Y/n) ");
       String str = keyboard.next();
-      if (!str.equalsIgnoreCase("y") && !str.equalsIgnoreCase(""))
-        break;
+      System.out.print();
       
-      index++;
-    }
+      if (!str.equalsIgnoreCase("y") && !str.equalsIgnoreCase("")) {
+        while (indexprint <= index) {
+          System.out.printf("%d, %s, %s ~ %s, %d\n", num[indexprint], className[indexprint],
+              starDate[indexprint], endDate[indexprint], totalDate[indexprint]);
+          indexprint++;
+        }
+        break;
+      }
 
-    while (indexprint <= index) {
-      System.out.printf("%d, %s, %s ~ %s, %d\n", num[indexprint], className[indexprint], starDate[indexprint], endDate[indexprint],
-          totalDate[indexprint]);
-      indexprint++;
+      index++;
     }
   }
 }

@@ -2,11 +2,11 @@
 package ch05;
 
 public class Test10 {
-  
+
   public static void main(String[] args) {
     // 중첩 반복문의 활용
     int a = 1;
-    while (a <= 10) { 
+    while (a <= 10) {
       int b = 1;
       while (b <= a) {
         System.out.print(b++ + " ");
@@ -15,10 +15,10 @@ public class Test10 {
       a++;
     }
     System.out.println("-------------------------");
-    
+
     // 중첩 반복문에서 가장 바깥의 반복문을 나가기
     a = 1;
-    while (a <= 10) { 
+    while (a <= 10) {
       int b = 1;
       while (b <= a) {
         System.out.print(b++ + " ");
@@ -29,12 +29,12 @@ public class Test10 {
       a++;
     }
     System.out.println("-------------------------");
-    
+
     // 중첩 반복문에서 가장 바깥의 반복문을 나가기 II
     a = 1;
     // 반복문에 라벨을 붙인다.
     okok: // okok 라벨은 while() 문에 대한 별명이다.
-    while (a <= 10) { 
+    while (a <= 10) {
       int b = 1;
       while (b <= a) {
         System.out.print(b++ + " ");
@@ -44,7 +44,7 @@ public class Test10 {
       System.out.println();
       a++;
     }
-    
+
     System.out.println("프로그램 종료!");
   }
 }
@@ -61,16 +61,3 @@ public class Test10 {
     문장3;
   }
  */
-
-
-
-
-
-
-
-
-
-
-
-
-

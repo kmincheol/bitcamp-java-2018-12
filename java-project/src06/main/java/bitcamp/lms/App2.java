@@ -7,8 +7,8 @@ public class App2 {
   public static void main(String[] args) {
     java.util.Scanner keyboard = new java.util.Scanner(System.in);
 
-    int index = 1;
-    int indexPrint = 1;
+    int index = 0;
+    int indexPrint = 0;
 
     int[] num = new int[100];
     String[] name = new String[100];
@@ -39,15 +39,15 @@ public class App2 {
       System.out.print("계속 입력하시겠습니까?(Y/n)");
       String str = keyboard.next();
       System.out.println();
-      if (!str.equalsIgnoreCase("y") && !str.equalsIgnoreCase(""))
+      if (!str.equalsIgnoreCase("y") && !str.equalsIgnoreCase("")) {
+        while (indexPrint <= index) {
+          System.out.printf("%d, %s, %s, %s\n", num[indexPrint], name[indexPrint],
+              callNum[indexPrint], createdDate);
+          indexPrint++;
+        }
         break;
-      
+      }
       index++;
-    }
-    
-    while (indexPrint <= index) {
-      System.out.printf("%d, %s, %s, %s\n", num[indexPrint], name[indexPrint], callNum[indexPrint], createdDate);
-      indexPrint++;
     }
   }
 }

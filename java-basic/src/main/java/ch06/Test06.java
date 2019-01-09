@@ -33,7 +33,8 @@ public class Test06 {
     result = plus(arr3);
     System.out.println(result);
     /*
-     * int[] arr4; arr4 = {10,20,30,40};
+     * int[] arr4; 
+     * arr4 = {10,20,30,40};
      */
 
     // 파라미터에 넘겨 줄 값으로 배열을 바로 만든다.

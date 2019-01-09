@@ -3,7 +3,7 @@ package ch06;
 
 public class Test07 {
   public static void main(String[] args) {
-    // 가변 파라미터는 호출하는 쪾에서 배열을 만들 필요하 없다,
+    // 가변 파라미터는 호출하는 쪽에서 배열을 만들 필요가 없다.
     // 자바가 자동으로 배열을 만든다
     plus1();
     plus2(10);

@@ -10,7 +10,7 @@ public class Test14 {
       System.out.print(names[i] + " ");
     }
     System.out.println();
-    
+  
     // 인덱스 범위 조정
     for (int i = 2; i < 4; i++) {
       System.out.print(names[i] + " ");

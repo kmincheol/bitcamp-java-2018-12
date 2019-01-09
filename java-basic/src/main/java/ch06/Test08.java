@@ -35,7 +35,7 @@ public class Test08 {
   }
 */
   // 배열은 순서에 상관없다. 어느 순서에도 올 수 있다.
-  static void compute3(int[] value, String name) { // 컴파일 오류
+  static void compute3(int[] value, String name) {
     int sum = 0;
     for (int i = 0; i < value.length; i++) {
       sum += value[i];
@@ -44,7 +44,7 @@ public class Test08 {
   }
   
   // 여러 개의 배열을 파라미터의 값으로 넘길 수 있다.
-  static void compute4(int[] value, String[] name) { // 컴파일 오류
+  static void compute4(int[] value, String[] name) {
     for (int i = 0; i < value.length; i++) {
       System.out.printf("%s 님의 점수는 %d입니다.\n", name[i], value[i]);
     }

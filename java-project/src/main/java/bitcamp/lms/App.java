@@ -5,12 +5,13 @@ import java.util.Scanner;
 
 public class App {
 
+  final static int LENGTH= 10; 
   static Scanner keyboard = new Scanner(System.in);
   static Date createdDate = new Date(System.currentTimeMillis());
 
-  static Lesson[] lesson = new Lesson[10];
-  static Member[] member = new Member[10];
-  static Board[] board = new Board[10];
+  static Lesson[] lesson = new Lesson[LENGTH];
+  static Member[] member = new Member[LENGTH];
+  static Board[] board = new Board[LENGTH];
   
   static int indexLesson = 0;
   static int indexMember = 0;

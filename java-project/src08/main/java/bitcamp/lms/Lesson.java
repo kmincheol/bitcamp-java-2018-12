@@ -1,6 +1,6 @@
 package bitcamp.lms;
 
-class Lesson {
+public class Lesson {
   int num;
   String className;
   String classContents;

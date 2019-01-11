@@ -1,4 +1,4 @@
-// 인스턴스 필드와 클래스 필드
+// 클래스 필드
 package ch08;
 
 class My1 {
@@ -31,8 +31,6 @@ class My1 {
 
 public class Test01 {
   public static void main(String[] args) {
-    
-    
     
     My1 obj1 = new My1();
     obj1.name = "홍길동";

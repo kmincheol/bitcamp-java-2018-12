@@ -14,7 +14,7 @@ public class App {
     LessonHandler.keyboard = keyboard;
     MemberHandler.keyboard = keyboard;
     BoardHandler.keyboard = keyboard;
-    
+
     while (true) {
       System.out.print("명령> ");
       String command = keyboard.nextLine().toLowerCase();

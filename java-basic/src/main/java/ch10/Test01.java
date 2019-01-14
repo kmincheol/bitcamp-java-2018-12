@@ -23,6 +23,7 @@ public class Test01 {
     obj1.a = 200; // = My1.a
     obj2.a = 300; // = My1.a
     obj3.a = 400; // = My1.a
+    
 
     System.out.println(My1.a);
 

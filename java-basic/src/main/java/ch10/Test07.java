@@ -13,7 +13,7 @@ class Monitor5 {
     this.widthRes = 1920;
   }
 
-  Monitor5() {
+  Monitor5() { // 생성자
     this.contrast = 70;
     this.widthRes = 2560;
     this.heightRes = 1200;

@@ -34,7 +34,7 @@ public class Test06 {
     // 예) c1.plus(3);
     //
     // 인스턴스 메서드는 인스턴스 주소 없이 호출할 수 없다.
-     Calculator4.plus(3); // 컴파일 오류!
+     //Calculator4.plus(3); // 컴파일 오류!
 
     Calculator4 c3 = null;
     //c3.plus(3); // 런타임(run-time) 오류! => NullpointerException 예외 발생

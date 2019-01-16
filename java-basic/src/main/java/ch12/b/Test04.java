@@ -28,15 +28,15 @@ public class Test04 {
     // 또한 compute()는 private으로 비공개 되었다.
     // s1.compute();
 
-    System.out.printf("총점=%d, 평균=%.1f\n", s1.getSum(), s1.getAver());
+    System.out.printf("%s: 총점=%d, 평균=%.1f\n",s1.getName(), s1.getSum(), s1.getAver());
 
     // 언제든 어떤 과목의 점수를 바꾸더라도 합계와 평균은 자동 계산되어 옳은 값을 가진다.
     s1.setKor(70);
-    System.out.printf("총점=%d, 평균=%.1f\n", s1.getSum(), s1.getAver());
+    System.out.printf("%s: 총점=%d, 평균=%.1f\n",s1.getName(), s1.getSum(), s1.getAver());
 
     // 유효하지 않은 값은 setter에서 거부한다.
     s1.setEng(-200);
-    System.out.printf("총점=%d, 평균=%.1f\n", s1.getSum(), s1.getAver());
+    System.out.printf("%s: 총점=%d, 평균=%.1f\n",s1.getName(), s1.getSum(), s1.getAver());
 
     // 이것이 인스턴스 필드를 직접 접근하지 못하도록 막는 이유이다.
   }

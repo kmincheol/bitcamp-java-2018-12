@@ -3,39 +3,40 @@ package ch11;
 
 public class Test09 {
   public static void main(String[] args) {
-    StringBuffer b1 = new StringBuffer("Hello");
-    StringBuffer b2 = new StringBuffer("Hello");
+    // 자바는 primitive type의 각각에 대응하는 클래스를 제공한다.
+    // 자바 원시 타입의 각각에 대응하는 클래스를 제공한다.
+    // 이 클래스를 "Weapper 클래스"라 ("부른다"
 
-    System.out.println(b1 == b2);
 
-    // StringBuffer의 equals()는 값을 비교하는 것이 아니라 인스턴스가 같은지 비교한다.
-    // 즉 == 연산자와 똑같다.
-    System.out.println(b1.equals(b2));
+    // Wrapper 클래스의 생성자가 deprecaed 상태이다.
+    // 가능한 생성자를 사용하여 인스턴스를 생성하지 말라!
+    // deprecated(비난받는)? 사용하지 않는 것이 좋다고 결정되었고, 가까운 장래에 제거된 것이라는 의미.
 
-    // 어떤 클래스에 equals()가 있나요?
-    // => 모든 클래스에 있다.
-    //
-    // => 자바의 모든 클래스는 Object 클래스에 정의된 기능을 상속 받는다.
-    // Object를 상속 받지 않을 수 없다.
-    // => 따라서 자바의 모든 클래스는 Object 클래스에 정의된 메서드를 사용할 수 있다.
-    //
-    // Object 클래스에 어떤 메서드가 있나요?
-    // => equals() : 인스턴스가 같은지를 비교한다.
-    // => toString() : 인스턴스의 클래스명과 해시코드를 리턴한다.
-    // => hashCode() : 인스턴스의 해시 코드를 리턴한다.
-    // => getClass() : 클래서 정보를 리턴한다.
-    // => clone() : 인스턴스를 복제하여 리턴한다.
-    // => finalize() : 가비지 컬렉터에 의해 제거되기 전에 호출된다.
-    // => wait() : 잠시 실행을 멈춘다. 외부에서 깨워줄 때까지 멈춘다.
-    // => notify() : wait()로 실행을 멈춘 것을 깨운다.
-    // => notifyAll() : wait()로 실행을 멈춘 것을 모두 깨운다.
+    // Integer i1 = new Integer(100); // 가능한 사용하지 말자!
+    Integer i1 = Integer.valueOf(100); // OK!
 
-    // Object로부터 상속 받은 equals()가 원래는 인스턴스가 같은지를 비교한다고 했는데,
-    // 왜, String 클래스는 인스턴스가 아닌 문자열 값을 비교하나요?
-    // => String 클래스는 상속 받은 equals() 메서드를 재정의하였기 때문이다.
-    // => 이렇게 상속 받은 기능을 자신의 역할에 맞게끔 재정의하는 것을 "오버라이딩(overrriding)"이라 한다.
-    //
-    // StringBuffer는 재정의 하지 않아서 다르다고 결과가 나온건가요?
-    // => 예!
+    // char c = new Character('가');
+    Character c1 = Character.valueOf('가');
+
+    // Wrapper 클래스는 해당 값을 다루는 다양한 메서드를 제공한다.
+    byte b = i1.byteValue(); // int byte로 변환하여 리턴하는 메서드
+    String s = i1.toString(); // int를 String 인스턴스로 리턴하는 메서드
+    String str = Integer.toHexString(200); // int 값을 16진수로 변환한 후 문자열로 리턴
+
+    // Wrapper 클래스의 가장 큰 목적!
+    // => primitive 값을 포함하여 모든 값을 쉽게 주고 받기 위함이다.
+
+    // Wrapper 클래스를 사용하지 않으면 다음과 같이 각 타입의 값을 처리할 메서드를
+    // 여러 개 만드들어야 한다.
+    printInt(100);
+    printFloat(3.14f);
+    // printInt("Hello") // 컴파일 오류!
+    // primitive 데이터를 다루는 메서드를 여러 개 만들 필요가 없다.
+
+  }
+  static void printInt(int i) {
+    System.out.printf("값 => %f, f");
+  static void printFloat(float f) {
+    System.out.printf("값 => %f, f");
   }
 }

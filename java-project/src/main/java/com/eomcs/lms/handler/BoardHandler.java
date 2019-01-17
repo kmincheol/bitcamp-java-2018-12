@@ -7,23 +7,23 @@ import com.eomcs.lms.domain.Board;
 public class BoardHandler {
 
   public Scanner keyboard;
-  static final int LENGTH = 10;
-  Board[] boards = new Board[LENGTH];
-  int boardIdx = 0;
-  
+  BoardList boardList = new BoardList();
+
   public BoardHandler(Scanner bk) {
-    keyboard=bk;
+    keyboard = bk;
     // TODO Auto-generated constructor stub
   }
 
   public void listBoard() {
-    for (int j = 0; j < this.boardIdx; j++) {
-      System.out.printf("%3d, %-20s, %s, %d\n", this.boards[j].getNo(), this.boards[j].getContents(),
-          this.boards[j].getCreatedDate(), this.boards[j].getViewCount());
+    Board[] boards = boardList.toArray(); // 목록을 배열로 만들어줌
+    for (Board board : boards) {
+      System.out.printf("%3d, %-20s, %s, %d\n", board.getNo(), board.getContents(),
+          board.getCreatedDate(), board.getViewCount());
     }
   }
 
   public void addBoard() {
+    // 인스턴스 생성
     Board board = new Board();
 
     System.out.print("번호? ");
@@ -36,8 +36,7 @@ public class BoardHandler {
 
     board.setViewCount(0);
 
-    this.boards[boardIdx] = board;
-    this.boardIdx++;
+    boardList.add(board);
 
     System.out.println("저장하였습니다.");
   }

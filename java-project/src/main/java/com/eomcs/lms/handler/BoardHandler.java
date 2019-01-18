@@ -6,16 +6,17 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
 
-  public Scanner keyboard;
-  BoardList boardList = new BoardList();
+  Scanner keyboard;
+  ArrayList<Board> list;
 
-  public BoardHandler(Scanner bk) {
-    keyboard = bk;
-    // TODO Auto-generated constructor stub
+
+  public BoardHandler(Scanner keyboard) {
+    this.keyboard = keyboard;
+    this.list = new ArrayList<>();
   }
 
   public void listBoard() {
-    Board[] boards = boardList.toArray(); // 목록을 배열로 만들어줌
+    Board[] boards = list.toArray(new Board[0]);
     for (Board board : boards) {
       System.out.printf("%3d, %-20s, %s, %d\n", board.getNo(), board.getContents(),
           board.getCreatedDate(), board.getViewCount());
@@ -23,22 +24,40 @@ public class BoardHandler {
   }
 
   public void addBoard() {
-    // 인스턴스 생성
+
     Board board = new Board();
 
     System.out.print("번호? ");
-    board.setNo(Integer.parseInt(this.keyboard.nextLine()));
+    board.setNo(Integer.parseInt(keyboard.nextLine()));
 
     System.out.print("내용? ");
-    board.setContents(this.keyboard.nextLine());
+    board.setContents(keyboard.nextLine());
 
     board.setCreatedDate(new Date(System.currentTimeMillis()));
 
     board.setViewCount(0);
 
-    boardList.add(board);
+    list.add(board);
 
     System.out.println("저장하였습니다.");
   }
 
+  public void detailBoard() {
+    System.out.print("번호? ");
+    int i = Integer.parseInt(keyboard.nextLine());
+    Board board= list.get();
+    if(i==board.getNo()) {
+      System.out.printf("%3d, %-20s\n", board.getNo(), board.getContents());
+    }
+  }
+
+  public void updateBoard() {
+
+  }
+
+  public void deleteBoard() {
+
+  }
 }
+
+

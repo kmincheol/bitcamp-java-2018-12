@@ -54,5 +54,3 @@ public class Test05 {
     return (T[]) Array.newInstance(arr.getClass(), 10);
   }
 }
-
-

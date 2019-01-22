@@ -44,20 +44,22 @@ public class BoardHandler {
   }
 
   public void detailBoard() {
-    System.out.print("번호? ");
-    int i = Integer.parseInt(keyboard.nextLine());
-    Board board= list.get();
-    if(i==board.getNo()) {
-      System.out.printf("%3d, %-20s\n", board.getNo(), board.getContents());
-    }
-  }
-
-  public void updateBoard() {
-
+    // TODO Auto-generated method stub
+    
   }
 
   public void deleteBoard() {
+    // TODO Auto-generated method stub
+    
+  }
 
+  public void updateBoard() {
+    // TODO Auto-generated method stub
+    
+  }
+  private int promptLessonNo() {
+    System.out.print("번호? ");
+    return Integer.parseInt(keyboard.nextLine());
   }
 }
 

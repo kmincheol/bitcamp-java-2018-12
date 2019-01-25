@@ -4,23 +4,38 @@ import java.util.Scanner;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.ArrayList;
+import com.eomcs.util.LinkedList;
+import com.eomcs.util.Queue;
 import com.eomcs.util.Stack;
 
 public class App {
 
   static Scanner keyboard = new Scanner(System.in);
+
+  // 사용자가 입력한 명령을 보관할 스택 준비
   static Stack<String> commandHistory = new Stack<>();
+  static Queue<String> commandHistory2 = new Queue<>();
 
   public static void main(String[] args) {
     
-    LessonHandler lessonHandler = new LessonHandler(keyboard);
-    MemberHandler memberHandler = new MemberHandler(keyboard);
-    BoardHandler boardHandler1 = new BoardHandler(keyboard);
-    BoardHandler boardHandler2 = new BoardHandler(keyboard);
+    // 핸들러가 필요로 하는 의존 객체를 이 클래스에서 만들어 주입해 준다.
+    // => "의존 객체 주입(Dependency Injection; DI)"이라 한다.
+    //
+    LessonHandler lessonHandler = new LessonHandler(keyboard, new ArrayList<>());
+    MemberHandler memberHandler = new MemberHandler(keyboard, new ArrayList<>());
+    BoardHandler boardHandler1 = new BoardHandler(keyboard, new LinkedList<>());
+    BoardHandler boardHandler2 = new BoardHandler(keyboard, new LinkedList<>());
     
     while (true) {
       String command = prompt();
 
+      // 사용자가 입력한 명령을 스택에 보관한다.
+      commandHistory.push(command);
+      
+      // 사용자가 입력한 명령을 큐에 보관한다.
+      commandHistory2.offer(command);
+      
       if (command.equals("/lesson/add")) {
         lessonHandler.addLesson();
         
@@ -85,8 +100,12 @@ public class App {
         System.out.println("안녕!");
         break;
         
-      }else if (command.equals("history")) {
+      } else if (command.equals("history")) {
         printCommandHistory();
+        
+      } else if (command.equals("history2")) {
+        printCommandHistory2();
+        
       } else {
         System.out.println("실행할 수 없는 명령입니다.");
       }
@@ -99,21 +118,39 @@ public class App {
 
   private static void printCommandHistory() {
     try {
-      Stack<String> history = commandHistory.clone();
-
+      // 명령어가 보관된 스택에서 명령어를 꺼내기 전에 복제한다.
+      Stack<String> temp = commandHistory.clone();
       int count = 0;
-      while (!history.empty()) {
-        System.out.println(history.pop());
-
+      while (!temp.empty()) {
+        System.out.println(temp.pop());
         if (++count % 5 == 0) {
-          System.out.println(":");
-          if (keyboard.nextLine().equalsIgnoreCase("q"))
+          System.out.print(":");
+          String input = keyboard.nextLine();
+          if (input.equalsIgnoreCase("q"))
             break;
         }
-        count++;
       }
     } catch (Exception e) {
-      System.out.println("명령어 목록 출력 실패");
+      e.printStackTrace();
+    }
+  }
+  
+  private static void printCommandHistory2() {
+    try {
+      // 명령어가 보관된 스택에서 명령어를 꺼내기 전에 복제한다.
+      Queue<String> temp = commandHistory2.clone();
+      int count = 0;
+      while (!temp.empty()) {
+        System.out.println(temp.poll());
+        if (++count % 5 == 0) {
+          System.out.print(":");
+          String input = keyboard.nextLine();
+          if (input.equalsIgnoreCase("q"))
+            break;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 

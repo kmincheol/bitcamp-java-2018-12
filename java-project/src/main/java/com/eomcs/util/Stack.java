@@ -1,17 +1,25 @@
 package com.eomcs.util;
 
-// 스택에 복제 기능 활성화 시키기
+
 public class Stack<E> implements Cloneable {
 
   public static final int DEFAULT_SIZE = 5;
 
-  Object[] list;
-  int size;
+  private E[] list;
+  private int size=0;
 
+  @SuppressWarnings("unchecked")
   public Stack() {
-    list = new Object[DEFAULT_SIZE];
+    list = (E[]) new Object[DEFAULT_SIZE];
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public Stack<E> clone() throws CloneNotSupportedException {
+    return (Stack<E>) super.clone();
+  }
+  
+  @SuppressWarnings("unchecked")
   public void push(E value) {
     // 맨 마지막에 추가한다.
     // 배열의 크기가 작다면 확장해야 한다.
@@ -22,7 +30,7 @@ public class Stack<E> implements Cloneable {
       for (int i = 0; i < list.length; i++) {
         arr[i] = list[i];
       }
-      list = arr;
+      list = (E[]) arr;
     }
     list[size++] = value;
   }
@@ -42,11 +50,5 @@ public class Stack<E> implements Cloneable {
 
   public int size() {
     return this.size;
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public Stack<E> clone() throws CloneNotSupportedException {
-    return (Stack<E>) super.clone();
   }
 }

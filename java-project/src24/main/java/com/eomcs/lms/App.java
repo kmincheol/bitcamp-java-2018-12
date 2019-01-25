@@ -1,14 +1,14 @@
 package com.eomcs.lms;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Stack;
 import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.util.ArrayList;
+import com.eomcs.util.Iterator;
+import com.eomcs.util.LinkedList;
+import com.eomcs.util.Queue;
+import com.eomcs.util.Stack;
 
 public class App {
 
@@ -16,7 +16,7 @@ public class App {
 
   // 사용자가 입력한 명령을 보관할 스택 준비
   static Stack<String> commandHistory = new Stack<>();
-  static ArrayDeque<String> commandHistory2 = new ArrayDeque<>();
+  static Queue<String> commandHistory2 = new Queue<>();
 
   public static void main(String[] args) {
     
@@ -72,49 +72,37 @@ public class App {
         
       } else if (command.equals("/board/list")) {
         boardHandler1.listBoard();
-
+        
       } else if (command.equals("/board/detail")) {
         boardHandler1.detailBoard();
-
+      
       } else if (command.equals("/board/update")) {
         boardHandler1.updateBoard();
-
+      
       } else if (command.equals("/board/delete")) {
         boardHandler1.deleteBoard();
-
+      
       } else if (command.equals("/board2/add")) {
         boardHandler2.addBoard();
-
+        
       } else if (command.equals("/board2/list")) {
         boardHandler2.listBoard();
-
+        
       } else if (command.equals("/board2/detail")) {
         boardHandler2.detailBoard();
-
+      
       } else if (command.equals("/board2/update")) {
         boardHandler2.updateBoard();
-
+      
       } else if (command.equals("/board2/delete")) {
         boardHandler2.deleteBoard();
-
+      
       } else if (command.equals("quit")) {
         System.out.println("안녕!");
         break;
-
+        
       } else if (command.equals("history")) {
-        printCommandHistory(new Iterator<String>() {
-          int index = commandHistory.size() - 1;
-
-          @Override
-          public boolean hasNext() {
-            return index >= 0;
-          }
-
-          @Override
-          public String next() {
-            return commandHistory.get(index--);
-          }
-        });
+        printCommandHistory(commandHistory.iterator());
         
       } else if (command.equals("history2")) {
         printCommandHistory(commandHistory2.iterator());

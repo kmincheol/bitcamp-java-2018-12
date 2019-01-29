@@ -49,13 +49,11 @@ public class App {
     commandMap.put("/board/detail", new BoardDetailCommand(keyboard, boardList));
     commandMap.put("/board/update", new BoardUpdateCommand(keyboard, boardList));
     commandMap.put("/board/delete", new BoardDeleteCommand(keyboard, boardList));
-    
     commandMap.put("/member/add", new MemberAddCommand(keyboard, memberList));
     commandMap.put("/member/list", new MemberListCommand(keyboard, memberList));
     commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberList));
     commandMap.put("/member/update", new MemberUpdateCommand(keyboard, memberList));
     commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberList));
-    
     commandMap.put("/lesson/add", new LessonAddCommand(keyboard, lessonList));
     commandMap.put("/lesson/list", new LessonListCommand(keyboard, lessonList));
     commandMap.put("/lesson/detail", new LessonDetailCommand(keyboard, lessonList));
@@ -93,13 +91,7 @@ public class App {
         if (commandHandler == null)
           System.out.println("실행할 수 없는 명령입니다.");
         else
-          try {
           commandHandler.execute();
-          // 예외가 발생하면 다음 문장을 실행한다.
-          // 그리고 계속 프로그램을 실행한다.
-          }catch(Exception e) {
-            System.out.printf("작업 중 오류 발생 : %s\n",e.toString());
-          }
       }
       System.out.println(); // 결과 출력 후 빈 줄 출력
     }

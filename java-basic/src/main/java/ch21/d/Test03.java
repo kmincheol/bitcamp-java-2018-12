@@ -44,7 +44,7 @@ public class Test03 {
     list.add(name);
   }
   
-  //3) throw 명령으로 예외 보고하기
+  // 3) throw 명령으로 예외 보고하기
   //=> throw 명령을 사용하여 예외 객체를 호출자에게 던진다.
   //     throw [java.lang.Throwable 객체];
   //=> 메서드 선언부에 던지는 예외 클래스의 이름을 기술한다.
@@ -70,12 +70,6 @@ public class Test03 {
    
     return a / b;
   }
- 
- 
 }
-
-
-
-
 
 

@@ -7,13 +7,13 @@ public class Test01_2 {
   public static void main(String[] args) {
 
     try {
-      FileInputStream in = new FileInputStream("jls11.pdf");
+      FileInputStream in = new FileInputStream("Pier - 20681.mp4");
 
       System.out.println("데이터 읽는 중 ...");
 
       long start = System.currentTimeMillis();
 
-      byte[] buf = new byte[1000];
+      byte[] buf = new byte[1024];
       int len = 0;
       while ((len = in.read(buf)) != -1) {
         //

@@ -1,8 +1,11 @@
 package com.eomcs.lms.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Member implements Cloneable {
+public class Member implements Cloneable, Serializable {
+  private static final long serialVersionUID = 3L;
+
   private int no;
   private String name;
   private String email;
@@ -72,21 +75,5 @@ public class Member implements Cloneable {
     this.registeredDate = registeredDate;
   }
 
-  public static Member valueOf(String csv) {
-
-    String[] values = csv.split(",");
-
-    Member member = new Member();
-    member.setNo(Integer.parseInt(values[0]));
-    member.setName(values[1]);
-    member.setEmail(values[2]);
-    member.setPassword(values[3]);
-    member.setPhoto(values[4]);
-    member.setTel(values[5]);
-    member.setRegisteredDate(Date.valueOf(values[6]));
-
-
-    return member;
-  }
 
 }

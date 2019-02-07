@@ -1,20 +1,19 @@
 package com.eomcs.lms.handler;
-
 import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 
-public class MemberDetailCommand implements Command{
-
+public class MemberDetailCommand implements Command {
+  
   Scanner keyboard;
   List<Member> list;
-
+  
   public MemberDetailCommand(Scanner keyboard, List<Member> list) {
     this.keyboard = keyboard;
-    this.list = list; // 파라미터로 주입된 의존 객체를 저장한다.
+    this.list = list;
   }
-
-
+  
+  @Override
   public void execute() {
     System.out.print("번호? ");
     int no = Integer.parseInt(keyboard.nextLine());

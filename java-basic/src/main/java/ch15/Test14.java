@@ -1,5 +1,5 @@
 // Object 클래스 - getClass()와 배열의 항목 이름
-package ch14;
+package ch15;
 
 public class Test14 {
   public static void main(String[] args) {

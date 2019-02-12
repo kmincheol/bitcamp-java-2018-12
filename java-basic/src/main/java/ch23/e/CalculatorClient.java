@@ -17,6 +17,9 @@ public class CalculatorClient {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
     
+    // 서버에서 클라이언트 구분할 때 사용할 값 
+    long sessionId = 0;
+    
     while (true) {
       System.out.print("> ");
       String input = keyboard.nextLine();
@@ -28,9 +31,18 @@ public class CalculatorClient {
           BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
         System.out.println("서버와 연결됨!, 서버에게 계산 작업을 요청함");
-        out.println(input);
+        
+
+        out.println(sessionId); // 서버에 먼저 세션 ID를 보낸다.
+        out.println(input); // 사용자가 입력한 값을 보낸다.
         out.flush();
 
+        if (sessionId == 0) {
+          // 서버에서 보낸 세션 ID가 0이면 서버는 새로 세션 ID를 발급하여 보내줄 것이다.
+          // 받아야한다.
+          sessionId = Long.parseLong(in.readLine());
+          System.out.printf("발급 받은 세션 ID: %d\n", sessionId);
+        }
         String response = in.readLine();
         System.out.println(response);
 

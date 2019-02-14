@@ -1,4 +1,4 @@
-// 7단계 : 클라이언트에서 요청한 /member명령을 처리한다.
+// 7단계: 클라이언트에서 요청한 /member/* 명령을 처리한다.
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import com.eomcs.lms.domain.Member;
 
 public class MemberCommand {
+
   static ArrayList<Member> members = new ArrayList<>();
+
   static ObjectInputStream in;
   static ObjectOutputStream out;
 
@@ -28,7 +30,7 @@ public class MemberCommand {
         break;
       case "/member/delete":
         delete();
-        break;
+        break;  
       default:
         out.writeUTF("FAIL");
     }
@@ -38,7 +40,7 @@ public class MemberCommand {
   static void add() throws Exception {
     out.writeUTF("OK");
     out.flush();
-    members.add((Member) in.readObject());
+    members.add((Member)in.readObject());
     out.writeUTF("OK");
   }
 
@@ -61,6 +63,7 @@ public class MemberCommand {
         return;
       }
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -78,6 +81,7 @@ public class MemberCommand {
       }
       index++;
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -95,8 +99,15 @@ public class MemberCommand {
       }
       index++;
     }
-    out.writeUTF("FAIL");
+
+    out.writeUTF("FAIL");    
   }
+
 }
+
+
+
+
+
 
 

@@ -1,3 +1,4 @@
+// 10단계: 데이터를 파일로 관리한다.
 package com.eomcs.lms.service;
 
 import java.io.BufferedInputStream;
@@ -10,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.eomcs.lms.domain.Board;
 
-// 클라이언트의 요청을 처리하는 클래스라는 의미로
-// 클래스명을 *Service로 변경한다.
 public class BoardService {
+
   List<Board> boards;
+
   ObjectInputStream in;
   ObjectOutputStream out;
   String filepath;
@@ -22,30 +23,35 @@ public class BoardService {
     this.in = in;
     this.out = out;
   }
-
+  
   @SuppressWarnings("unchecked")
   public void loadData(String filepath) {
     this.filepath = filepath;
-    try (ObjectInputStream in =
-        new ObjectInputStream(new BufferedInputStream(new FileInputStream(this.filepath)))) {
+    
+    try (ObjectInputStream in = new ObjectInputStream(
+        new BufferedInputStream(
+            new FileInputStream(this.filepath)))) {
+      
       boards = (List<Board>) in.readObject();
+      
     } catch (Exception e) {
       boards = new ArrayList<Board>();
       throw new RuntimeException("게시글 파일 로딩 오류!", e);
     }
   }
-
+  
   public void saveData() throws Exception {
-    try (ObjectOutputStream out =
-        new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.filepath)))) {
-
+    try (ObjectOutputStream out = new ObjectOutputStream(
+        new BufferedOutputStream(
+            new FileOutputStream(this.filepath)))) {
+    
       out.writeObject(boards);
-
+      
     } catch (Exception e) {
       throw new Exception("게시글 파일 저장 오류!", e);
     }
   }
-
+  
   public void execute(String request) throws Exception {
 
     switch (request) {
@@ -63,7 +69,7 @@ public class BoardService {
         break;
       case "/board/delete":
         delete();
-        break;
+        break;  
       default:
         out.writeUTF("FAIL");
     }
@@ -73,7 +79,7 @@ public class BoardService {
   private void add() throws Exception {
     out.writeUTF("OK");
     out.flush();
-    boards.add((Board) in.readObject());
+    boards.add((Board)in.readObject());
     out.writeUTF("OK");
   }
 
@@ -96,6 +102,7 @@ public class BoardService {
         return;
       }
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -113,6 +120,7 @@ public class BoardService {
       }
       index++;
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -130,8 +138,15 @@ public class BoardService {
       }
       index++;
     }
-    out.writeUTF("FAIL");
+
+    out.writeUTF("FAIL");    
   }
+
 }
+
+
+
+
+
 
 

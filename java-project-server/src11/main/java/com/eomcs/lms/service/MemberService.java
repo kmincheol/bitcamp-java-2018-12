@@ -1,8 +1,10 @@
+// 11단계: AbstractService 상속 받기
 package com.eomcs.lms.service;
 
 import com.eomcs.lms.domain.Member;
 
 public class MemberService extends AbstractService<Member> {
+
   public void execute(String request) throws Exception {
 
     switch (request) {
@@ -20,7 +22,7 @@ public class MemberService extends AbstractService<Member> {
         break;
       case "/member/delete":
         delete();
-        break;
+        break;  
       default:
         out.writeUTF("FAIL");
     }
@@ -30,7 +32,7 @@ public class MemberService extends AbstractService<Member> {
   private void add() throws Exception {
     out.writeUTF("OK");
     out.flush();
-    list.add((Member) in.readObject());
+    list.add((Member)in.readObject());
     out.writeUTF("OK");
   }
 
@@ -38,7 +40,8 @@ public class MemberService extends AbstractService<Member> {
     out.writeUTF("OK");
     out.flush();
     out.writeUTF("OK");
-    out.writeObject(list);
+    //out.writeObject(list);
+    out.writeUnshared(list);
   }
 
   private void detail() throws Exception {
@@ -53,6 +56,7 @@ public class MemberService extends AbstractService<Member> {
         return;
       }
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -70,6 +74,7 @@ public class MemberService extends AbstractService<Member> {
       }
       index++;
     }
+
     out.writeUTF("FAIL");
   }
 
@@ -87,8 +92,15 @@ public class MemberService extends AbstractService<Member> {
       }
       index++;
     }
-    out.writeUTF("FAIL");
+
+    out.writeUTF("FAIL");    
   }
+
 }
+
+
+
+
+
 
 

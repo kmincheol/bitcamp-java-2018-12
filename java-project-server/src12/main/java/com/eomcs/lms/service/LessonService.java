@@ -1,8 +1,16 @@
 package com.eomcs.lms.service;
 
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonService extends AbstractService<Lesson> {
+
+  LessonDao lessonDao;
+  
+  public LessonService(LessonDao lessonDao) {
+    this.lessonDao = lessonDao;
+  }
+  
   public void execute(String request) throws Exception {
 
     switch (request) {
@@ -20,7 +28,7 @@ public class LessonService extends AbstractService<Lesson> {
         break;
       case "/lesson/delete":
         delete();
-        break;
+        break;  
       default:
         out.writeUTF("FAIL");
     }
@@ -30,7 +38,7 @@ public class LessonService extends AbstractService<Lesson> {
   private void add() throws Exception {
     out.writeUTF("OK");
     out.flush();
-    list.add((Lesson) in.readObject());
+    lessonDao.insert((Lesson)in.readObject());
     out.writeUTF("OK");
   }
 
@@ -38,7 +46,7 @@ public class LessonService extends AbstractService<Lesson> {
     out.writeUTF("OK");
     out.flush();
     out.writeUTF("OK");
-    out.writeUnshared(list);
+    out.writeUnshared(lessonDao.findAll());
   }
 
   private void detail() throws Exception {
@@ -46,14 +54,14 @@ public class LessonService extends AbstractService<Lesson> {
     out.flush();
     int no = in.readInt();
 
-    for (Lesson l : list) {
-      if (l.getNo() == no) {
-        out.writeUTF("OK");
-        out.writeObject(l);
-        return;
-      }
+    Lesson obj = lessonDao.findByNo(no);
+    if (obj == null) { 
+      out.writeUTF("FAIL");
+      return;
     }
-    out.writeUTF("FAIL");
+
+    out.writeUTF("OK");
+    out.writeObject(obj);
   }
 
   private void update() throws Exception {
@@ -61,16 +69,12 @@ public class LessonService extends AbstractService<Lesson> {
     out.flush();
     Lesson lesson = (Lesson) in.readObject();
 
-    int index = 0;
-    for (Lesson l : list) {
-      if (l.getNo() == lesson.getNo()) {
-        list.set(index, lesson);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if (lessonDao.update(lesson) == 0) {
+      out.writeUTF("FAIL");
+      return;
     }
-    out.writeUTF("FAIL");
+    
+    out.writeUTF("OK");
   }
 
   private void delete() throws Exception {
@@ -78,17 +82,19 @@ public class LessonService extends AbstractService<Lesson> {
     out.flush();
     int no = in.readInt();
 
-    int index = 0;
-    for (Lesson l : list) {
-      if (l.getNo() == no) {
-        list.remove(index);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if (lessonDao.delete(no) == 0) {
+      out.writeUTF("FAIL");    
+      return;
     }
-    out.writeUTF("FAIL");
+    
+    out.writeUTF("OK");
   }
+
 }
+
+
+
+
+
 
 

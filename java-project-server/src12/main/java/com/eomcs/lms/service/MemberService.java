@@ -1,8 +1,16 @@
 package com.eomcs.lms.service;
 
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberService extends AbstractService<Member> {
+
+  MemberDao memberDao;
+  
+  public MemberService(MemberDao memberDao) {
+    this.memberDao = memberDao;
+  }
+  
   public void execute(String request) throws Exception {
 
     switch (request) {
@@ -20,7 +28,7 @@ public class MemberService extends AbstractService<Member> {
         break;
       case "/member/delete":
         delete();
-        break;
+        break;  
       default:
         out.writeUTF("FAIL");
     }
@@ -30,7 +38,7 @@ public class MemberService extends AbstractService<Member> {
   private void add() throws Exception {
     out.writeUTF("OK");
     out.flush();
-    list.add((Member) in.readObject());
+    memberDao.insert((Member)in.readObject());
     out.writeUTF("OK");
   }
 
@@ -38,7 +46,7 @@ public class MemberService extends AbstractService<Member> {
     out.writeUTF("OK");
     out.flush();
     out.writeUTF("OK");
-    out.writeUnshared(list);
+    out.writeUnshared(memberDao.findAll());
   }
 
   private void detail() throws Exception {
@@ -46,14 +54,14 @@ public class MemberService extends AbstractService<Member> {
     out.flush();
     int no = in.readInt();
 
-    for (Member m : list) {
-      if (m.getNo() == no) {
-        out.writeUTF("OK");
-        out.writeObject(m);
-        return;
-      }
+    Member obj = memberDao.findByNo(no);
+    if (obj == null) { 
+      out.writeUTF("FAIL");
+      return;
     }
-    out.writeUTF("FAIL");
+
+    out.writeUTF("OK");
+    out.writeObject(obj);
   }
 
   private void update() throws Exception {
@@ -61,16 +69,12 @@ public class MemberService extends AbstractService<Member> {
     out.flush();
     Member member = (Member) in.readObject();
 
-    int index = 0;
-    for (Member m : list) {
-      if (m.getNo() == member.getNo()) {
-        list.set(index, member);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if (memberDao.update(member) == 0) {
+      out.writeUTF("FAIL");
+      return;
     }
-    out.writeUTF("FAIL");
+    
+    out.writeUTF("OK");
   }
 
   private void delete() throws Exception {
@@ -78,17 +82,19 @@ public class MemberService extends AbstractService<Member> {
     out.flush();
     int no = in.readInt();
 
-    int index = 0;
-    for (Member m : list) {
-      if (m.getNo() == no) {
-        list.remove(index);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if (memberDao.delete(no) == 0) {
+      out.writeUTF("FAIL");    
+      return;
     }
-    out.writeUTF("FAIL");
+    
+    out.writeUTF("OK");
   }
+
 }
+
+
+
+
+
 
 

@@ -21,7 +21,7 @@ public class ServerTest {
       member.setName("홍길동");
       member.setEmail("hong@test.com");
       member.setPassword("1111");
-      member.setPassword("hong.gif");
+      member.setPhoto("hong.gif");
       member.setTel("1111-1111");
       
       // Member 객체를 서버로 serialize하라!

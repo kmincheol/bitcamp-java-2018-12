@@ -17,6 +17,7 @@ public class Test01 {
     list.add(Integer.valueOf(100));
     list.add(100);
     list.add(new Date());
+    System.out.println(list);
 
     // ArrayList는 제네릭이 적용되어 있기 때문에 모든 타입의 인스턴스를 저장하고 싶다면,
     // 제네릭을 사용하여 ArrayList를 만들라!
@@ -25,5 +26,6 @@ public class Test01 {
     list2.add(Integer.valueOf(100));
     list2.add(100);
     list2.add(new Date());
+    System.out.println(list2);
   }
 }

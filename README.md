@@ -295,7 +295,55 @@
 - 과제: java-project에서 데이터처리 부분을 분리하여 서버로 만들라.
 
 ## 30일(2019-2-13)
-- 과제 풀이: java-project에서 데이터처리 부분을 분리하여 서버로 만들라.
+- 32단계 과제 풀이: java-project에서 데이터처리 부분을 분리하여 서버로 만들라.
+- 33단계 과제 풀이: Stateful 방식으로 Stateless 방식으로 전환하기
+
+## 31일(2019-2-14)
+- 33단계 과제 풀이: Stateful 방식으로 Stateless 방식으로 전환하기 II
+- 통신 기능을 별도의 클래스로 분리하기
+
+## 32일(2019-2-15)
+- '프록시 디자인 패턴'의 개념과 용도  
+- RMI 기술 개념과 활용하기
+
+## 33일(2019-2-18)
+- 33단계 과제 풀이: Stateful 방식으로 Stateless 방식으로 전환하기 III
+- 33단계 과제에 프록시 패턴 적용
+- Stateless의 한계 확인하기: 여러 클라이언트 요청 시에 문제점 확인
+- 34단계 과제 풀이: 멀티 스레드 활용하기
+- 멀티태스킹과 CPU 스케줄링
+- 프로세스와 스레드
+- 스레드 만들기 
+
+## 34일(2019-2-19)
+- 스레드 생명주기
+- join(), sleep()
+- 스레드와 동기화
+- 세마포어와 뮤텍스 개념
+- 35단계 과제 풀이 : 스레드풀 적용하기
+- DBMS와 Vendor API, ODBC API, JDBC API 관계
+- JDBC 드라이버의 종류와 구동 방식
+- MariaDB 설치
+- MariaDB 사용자 및 데이터베이스 생성
+
+## 35일(2019-2-20)
+- JDBC 드라이버 준비 및 프로젝트에 등록
+- 연습용 게시판 테이블 생성
+- CRUD 기본 SQL : select, insert, update, delete
+- JDBC 프로그래밍
+    - java.sql.Driver 구현체 등록하기
+    - DBMS 연결하기, java.sql.Connection 구현체
+    - java.sql.Statement 구현체 사용법
+    - CRUD JDBC 코드 구현
+
+## 36일(2019-2-21)
+- 36단계 과제 풀이(java-project2/src01): DAO에 데이터베이스 적용
+- 36단계 과제 풀이(java-project2/src02): Connection 공유
+- 36단계 과제 풀이(java-project2/src03): Observer 패턴 적용
+
+## 37일(2019-2-22)
+- 37단계 과제풀이(java-project2-client, java-project2-server): Application Server 도입하기
+- 
 
 
 

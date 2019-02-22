@@ -2,15 +2,15 @@ package com.eomcs.lms.handler;
 import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.dao.LessonDao;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
 import com.eomcs.lms.domain.Lesson;
+import com.eomcs.lms.proxy.LessonDaoProxy;
 
 public class LessonAddCommand implements Command {
 
   Scanner keyboard;
   LessonDao lessonDao;
   
-  public LessonAddCommand(Scanner keyboard, LessonDaoImpl lessonDao) {
+  public LessonAddCommand(Scanner keyboard, LessonDaoProxy lessonDao) {
     this.keyboard = keyboard;
     this.lessonDao = lessonDao;
   }
@@ -19,6 +19,9 @@ public class LessonAddCommand implements Command {
   @Override
   public void execute() {
     Lesson lesson = new Lesson();
+
+    System.out.print("번호? ");
+    lesson.setNo(Integer.parseInt(keyboard.nextLine()));
 
     System.out.print("수업명? ");
     lesson.setTitle(keyboard.nextLine());

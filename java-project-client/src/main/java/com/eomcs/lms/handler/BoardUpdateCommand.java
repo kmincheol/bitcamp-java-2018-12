@@ -1,37 +1,39 @@
 package com.eomcs.lms.handler;
-
 import java.util.Scanner;
 import com.eomcs.lms.dao.BoardDao;
-import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
 import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.proxy.BoardDaoProxy;
 
 public class BoardUpdateCommand implements Command {
-
+  
   Scanner keyboard;
   BoardDao boardDao;
-
-  public BoardUpdateCommand(Scanner keyboard, BoardDaoImpl boardDao) {
+  
+  public BoardUpdateCommand(Scanner keyboard, BoardDaoProxy boardDao) {
     this.keyboard = keyboard;
     this.boardDao = boardDao;
   }
-
+  
   @Override
   public void execute() {
+    System.out.print("번호? ");
+    int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-      System.out.print("번호? ");
-      Board board = new Board();
-      board.setNo(Integer.parseInt(keyboard.nextLine()));
-
+      Board board = boardDao.findByNo(no);
+    
+      // 기존 값 복제
+      Board temp = board.clone();
+      
       System.out.printf("내용? ");
-      board.setContents(keyboard.nextLine());
-
-      if (boardDao.update(board) == 0) {
-        System.out.println("해당 게시물이 없습니다.");
-        return;
-      }
+      String input = keyboard.nextLine();
+      if (input.length() > 0) 
+        temp.setContents(input);
+      
+      boardDao.update(temp);
+      
       System.out.println("변경했습니다.");
-
+      
     } catch (Exception e) {
       System.out.printf("실행 오류! : %s\n", e.getMessage());
     }

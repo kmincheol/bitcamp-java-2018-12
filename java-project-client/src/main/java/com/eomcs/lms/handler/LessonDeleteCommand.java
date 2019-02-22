@@ -1,19 +1,18 @@
 package com.eomcs.lms.handler;
-
 import java.util.Scanner;
 import com.eomcs.lms.dao.LessonDao;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
+import com.eomcs.lms.proxy.LessonDaoProxy;
 
 public class LessonDeleteCommand implements Command {
 
   Scanner keyboard;
   LessonDao lessonDao;
-
-  public LessonDeleteCommand(Scanner keyboard, LessonDaoImpl lessonDao) {
+  
+  public LessonDeleteCommand(Scanner keyboard, LessonDaoProxy lessonDao) {
     this.keyboard = keyboard;
     this.lessonDao = lessonDao;
   }
-
+  
 
   @Override
   public void execute() {
@@ -21,12 +20,9 @@ public class LessonDeleteCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-      if (lessonDao.delete(no) == 0) {
-        System.out.println("해당 번호의 게시물이없습니다.");
-        return;
-      }
+      lessonDao.delete(no);
       System.out.println("삭제했습니다.");
-
+      
     } catch (Exception e) {
       System.out.printf("실행 오류! : %s\n", e.getMessage());
     }

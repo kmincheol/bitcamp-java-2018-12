@@ -2,15 +2,15 @@ package com.eomcs.lms.handler;
 import java.util.List;
 import java.util.Scanner;
 import com.eomcs.lms.dao.MemberDao;
-import com.eomcs.lms.dao.mariadb.MemberDaoImpl;
 import com.eomcs.lms.domain.Member;
+import com.eomcs.lms.proxy.MemberDaoProxy;
 
 public class MemberListCommand implements Command {
   
   Scanner keyboard;
   MemberDao memberDao;
   
-  public MemberListCommand(Scanner keyboard, MemberDaoImpl memberDao) {
+  public MemberListCommand(Scanner keyboard, MemberDaoProxy memberDao) {
     this.keyboard = keyboard;
     this.memberDao = memberDao;
   }

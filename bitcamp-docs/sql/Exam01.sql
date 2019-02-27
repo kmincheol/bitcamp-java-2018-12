@@ -86,13 +86,13 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
     age int default 20
   );
 
-> insert into test1(no, name, age) values(1, 'aaa', 30);
+	> insert into test1(no, name, age) values(1, 'aaa', 30);
 
 값을 입력하지 않는 컬럼은 이름과 값 지정을 생략한다.
 > insert into test1(name, age) values('aaa', 30); /* 오류! no는 not null*/
 > insert into test1(no, age) values(3, 30);
 > insert into test1(no, name) values(4, 'ddd');
-> insert into test1(no) values(5);
+>c
 
 ### 컬럼 타입
 
@@ -115,22 +115,22 @@ DB 객체(테이블, 뷰, 함수, 트리거 등)를 생성, 변경, 삭제하는
   c4 numeric /* int와 같다 */
   );
   
-> insert into test1(c1) values(100);
-> insert into test1(c1) values(3.14); /* 소수점 이하 반올림하고 짜름 */
-> insert into test1(c1) values(100.98); /* 소수점 이하 반올림하고 짜름 */
-> insert into test1(c2) values(100);
-> insert into test1(c2) values(3.14);
-> insert into test1(c2) values(3.14159); 
-> insert into test1(c3) values(100);
-> insert into test1(c3) values(123456789); /* 입력 오류. 5자리 초과 */
-> insert into test1(c3) values(12345); /* 입력 오류. 1자리 초과 */
-> insert into test1(c3) values(1234);
-> insert into test1(c3) values(3.14);
-> insert into test1(c3) values(3.14159); /* 2자리를 초과한 값은 반올림. */
-> insert into test1(c3) values(3.14551); /* 2자리를 초과한 값은 반올림. */
-> insert into test1(c4) values(1234567890); 
-> insert into test1(c4) values(12.34567890); /* 소수점은 반올림 처리됨 */
-> insert into test1(c4) values(12345678.90); /* 소수점은 반올림 처리됨 */
+insert into test1(c1) values(100);
+insert into test1(c1) values(3.14); /* 소수점 이하 반올림하고 짜름 */
+insert into test1(c1) values(100.98); /* 소수점 이하 반올림하고 짜름 */
+insert into test1(c2) values(100);
+insert into test1(c2) values(3.14);
+insert into test1(c2) values(3.14159); 
+insert into test1(c3) values(100);
+insert into test1(c3) values(123456789); /* 입력 오류. 5자리 초과 */
+insert into test1(c3) values(12345); /* 입력 오류. 1자리 초과 */
+insert into test1(c3) values(1234);
+insert into test1(c3) values(3.14);
+insert into test1(c3) values(3.14159); /* 2자리를 초과한 값은 반올림. */
+insert into test1(c3) values(3.14551); /* 2자리를 초과한 값은 반올림. */
+insert into test1(c4) values(1234567890); 
+insert into test1(c4) values(12.34567890); /* 소수점은 반올림 처리됨 */
+insert into test1(c4) values(12345678.90); /* 소수점은 반올림 처리됨 */
 
 #### char(n)
 - 최대 n개의 문자를 저장.

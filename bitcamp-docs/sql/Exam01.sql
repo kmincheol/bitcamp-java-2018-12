@@ -208,18 +208,29 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
 
 > create table test1(
   c1 char(1),
-  c2 int
+  c2 int,
+  c3 boolean
   );
 
 
-> insert into test1(c1) values('Y'); /* yes */
-> insert into test1(c1) values('N'); /* no */
-> insert into test1(c1) values('T'); /* true */
-> insert into test1(c1) values('F'); /* false */
-> insert into test1(c1) values('1'); /* true */
-> insert into test1(c1) values('0'); /* false */
-> insert into test1(c2) values(1); /* true */
-> insert into test1(c2) values(0); /* false */
+insert into test1(c1) values('Y'); /* yes */
+insert into test1(c1) values('N'); /* no */
+insert into test1(c1) values('T'); /* true */
+insert into test1(c1) values('F'); /* false */
+insert into test1(c1) values('1'); /* true */
+insert into test1(c1) values('0'); /* false */
+insert into test1(c2) values(1); /* true */
+insert into test1(c2) values(0); /* false */
+
+insert into test1(c3) values('Y'); /* error=0 */
+insert into test1(c3) values('N'); /* error=0 */
+insert into test1(c3) values('T'); /* error=0 */
+insert into test1(c3) values('F'); /* error=0 */
+insert into test1(c3) values('1'); /* 1 */
+insert into test1(c3) values('0'); /* 0 */
+insert into test1(c3) values(1); /* 1 */
+insert into test1(c3) values(0); /* 0 */
+
 
 
 ### 키 컬럼 지정 
@@ -238,9 +249,9 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   );
 
 - 입력 테스트:
-> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100);
-> insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
-> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 허용*/
+insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100);
+insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
+insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 허용*/
 
 - PK를 지정한 후:
 > 컬럼명 타입 primary key
@@ -252,9 +263,9 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   );
 
 - 입력 테스트:
-> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100);
-> insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
-> insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100); /* 중복 오류!*/
+insert into test1(name,kor,eng,math) values('aaa', 100, 100, 100);
+insert into test1(name,kor,eng,math) values('bbb', 90, 90, 90);
+insert into test1(name,kor,eng,math) values('aaa', 100, 100, 800); /* 중복 오류!*/
 
 
 - 한 개 이상의 컬럼을 PK로 지정하기
@@ -275,14 +286,14 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   kor int,
   eng int,
   math int,
-  constraint test1_pk primary key(name, age)
+  constraint test1_pk primary key(name, age) /*test1_pk(라벨명) 생략가능*/
   );
 
 - 입력 테스트:
-> insert into test1(name, age, kor, eng, math) values('aa', 10, 100, 100, 100);
-> insert into test1(name, age, kor, eng, math) values('bb', 20, 90, 90, 90);
-> insert into test1(name, age, kor, eng, math) values('aa', 11, 88, 88, 88);
-> insert into test1(name, age, kor, eng, math) values('ab', 10, 88, 88, 88);
+insert into test1(name, age, kor, eng, math) values('aa', 10, 100, 100, 100);
+insert into test1(name, age, kor, eng, math) values('bb', 20, 90, 90, 90);
+insert into test1(name, age, kor, eng, math) values('aa', 11, 88, 88, 88);
+insert into test1(name, age, kor, eng, math) values('ab', 10, 88, 88, 88);
 
 /* 이름과 나이가 같으면 중복되기 때문에 입력 거절이다. */
 > insert into test1(name, age, kor, eng, math) values('aa', 10, 88, 88, 88);
@@ -299,10 +310,10 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   math int
   );
 
-> insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
-> insert into test1(no,name,age,kor,eng,math) values(2,'a',11,91,91,91);
-> insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
-> insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
+insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
+insert into test1(no,name,age,kor,eng,math) values(2,'a',11,91,91,91);
+insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
+insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
 
 /* 번호가 중복되었기 때문에 입력 거절 */
 > insert into test1(no,name,age,kor,eng,math) values(4,'d',21,81,81,81);
@@ -326,10 +337,10 @@ DBMS 중에는 고정 크기인 컬럼의 값을 비교할 때 빈자리까지 �
   );
 
 - 입력 테스트:
-> insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
-> insert into test1(no,name,age,kor,eng,math) values(2,'a',11,91,91,91);
-> insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
-> insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
+insert into test1(no,name,age,kor,eng,math) values(1,'a',10,90,90,90);
+insert into test1(no,name,age,kor,eng,math) values(2,'a',11,91,91,91);
+insert into test1(no,name,age,kor,eng,math) values(3,'b',11,81,81,81);
+insert into test1(no,name,age,kor,eng,math) values(4,'c',20,81,81,81);
 
 /* 번호가 중복되었기 때문에 입력 거절 */
 > insert into test1(no,name,age,kor,eng,math) values(4,'d',21,81,81,81);
@@ -394,7 +405,11 @@ alter table test1
   add column no int;
 
 alter table test1
-  add column age int;  
+  add column age int;
+  
+alter table test1
+  add column no2 int,  
+  add column age2 int;  
 ```
 
 - PK 컬럼 지정, UNIQUE 컬럼 지정, INDEX 컬럼 지정
@@ -468,7 +483,7 @@ insert into test1(name) values('eee');
 
 ## 뷰(view)
 - 조회 결과를 테이블처럼 사용하는 문법
-
+- select 문장이 복잡할 때 뷰로 정의해 놓고 사용하면 편리하다.
 ```
 create table test1 (
   no int primary key auto_increment,

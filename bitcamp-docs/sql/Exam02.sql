@@ -32,6 +32,7 @@ alter table test1
  * 값을 지정해야 한다.*/
 insert into 테이블명 value(값,....);
 insert into test1 values(null,'aaa','111','222','10101','seoul');
+-- insert into test1() values(null,'aaa','111','222','10101','seoul');
 
 /* 컬럼을 명시할 수 있다. 이때 값을 입력하는 컬럼의 순서를 바꿀 수 있다. */
 insert into 테이블명(컬럼,컬럼,...) values(값,값,...);

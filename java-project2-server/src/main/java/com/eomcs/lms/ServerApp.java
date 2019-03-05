@@ -1,24 +1,20 @@
-// 9단계: 서버에서 클라이언트 요청을 순차적으로 처리할 때 문제점과 그 해결책
-// [서버에서 클라이언트 요청을 처리하는 방법]
-// 1) Stateful 방식
-//    - 서버와 연결한 후 연결을 끊을 때까지 계속 통신하는 방식이다
-//    - 클라이언트가 연결을 끊지 않으면 서버 쪽에 계속 소켓이 유지되기 때문에 메모리를 일정 점유한다.
-//    - 그래서 많은 클라이언트의 요청을 처리하지 못한다.
-// 2) Stateless 방식
-//    - 서버와 연결한 후 요청/응답을 한번만 수행한다. 그리고 연결을 끊는다.
-//    - 서버에서 응답을 완료하면 자동으로 연결을 끊기 때문에 서버 쪽에 소켓을 계속 유지하지 않는다.
-//    - 그래서 Stateful 방식에 비해 메모리 낭비가 덜하다.
-//    - 단 요청할 때마다 서버와 연결해야 하기 때문에 연결하는데 일정 시간이 소요된다.
-//    - 그러나 보다 많은 클라이언트 요청을 처리할 수 있어 대부분의 서비스에서 이 방식을 많이 사용한다.
-// 3) Stateless 방식 + 멀티스레드
-//    - 특히 Stateless 방식에 멀티 스레드를 적용하면 동시에 많은 클라이언트 요청을 처리할 수 있다.
-//    - 대부분의 서비스들이 이 조합을 사용한다.
+// 12단계: 커넥션 풀(Flyweight 디자인 패턴)
+// => 클라이언트 요청을 처리할 때마다 매번 DB 커넥션을 생성한다면
+//    DB 커넥션 생성에 비용(실행시간, 메모리)이 많이 든다.
+// => 해결책?
+//    DB 커넥션을 생성한 다음에 버리지 말고 보관했다가 다시 사용하는 것이다.
 //
-// 9단계의 목표가 "stateless + 싱글 스레드" 방식을 "stateless + 멀티스레드"로 바꾸는 것이다.
-// 작업 : 
-// 1) 클라이언트 요청 처리를 전담할 스레드 클래스를 정의한다.
-//    => RequestHandlerThread
-// 2) ServerApp의 service()가 수행하던 클라이언트 요청 처리를 RequestHandlerThread로 옮긴다.
+// 작업:
+// 1) ConnectionFactory 클래스의 이름을 DataSource로 변경한다.
+//    - 생성된 커넥션들을 관리하도록 변경한다.
+//    - 커넥션을 반납하는 returnConnection() 메서드를 추가한다.
+// 2) DAO 구현체를 변경한다.
+//    - DataSource 객체를 의존 객체로 지정한다.
+//    - 생성자에서 DataSource 객체를 받는다.
+//    - 각 메서드는 DataSource 객체를 통해 커넥션을 받는다.
+// 3) ApplicationInitializer 변경
+//    - DataSource 객체 생성
+//    - DAO에 DataSource 객체 주입
 //
 package com.eomcs.lms;
 
@@ -27,10 +23,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.handler.Command;
+import com.eomcs.util.DataSource;
 
 public class ServerApp {
 
@@ -57,24 +56,23 @@ public class ServerApp {
       System.out.println("서버 실행 중...");
 
       while (true) {
-
         new RequestHandlerThread(ss.accept()).start();
-
       } // while
 
-//      // 애플리케이션을 종료할 때, 등록된 리스너에게 알려준다.
-//      // => 현재 while 문은 종료 조건이 없기 때문에 다음 문장을 실행할 수 없다.
-//      // => 따라서 주석으로 처리한다.   
-//      for (ApplicationContextListener listener : listeners) {
-//        listener.contextDestroyed(context);
-//      }
+      // // 애플리케이션을 종료할 때, 등록된 리스너에게 알려준다.
+      // // => 현재 while 문은 종료 조건이 없기 때문에 다음 문장을 실행할 수 없다.
+      // // => 따라서 주석으로 처리한다.
+      // for (ApplicationContextListener listener : listeners) {
+      // listener.contextDestroyed(context);
+      // }
 
     } catch (Exception e) {
       e.printStackTrace();
     } // try(ServerSocket)
   }
+
   public void release() {
-    
+
   }
 
   public static void main(String[] args) throws Exception {
@@ -99,6 +97,13 @@ public class ServerApp {
 
     @Override
     public void run() {
+
+      // DB 커넥션을 빌려줄 커넥션풀을 꺼낸다.
+      DataSource dataSource = (DataSource) context.get("dataSource");
+
+      // 커넥션풀에서 현재 스레드가 사용할 커넥션 객체를 빌린다.
+      Connection con = dataSource.getConnection();
+
       try (Socket socket = this.socket;
           BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
           PrintWriter out = new PrintWriter(socket.getOutputStream())) {
@@ -116,15 +121,35 @@ public class ServerApp {
           return;
         }
 
-        commandHandler.execute(in, out);
-
+        try {
+          commandHandler.execute(in, out);
+          // 클라이언트 요청을 처리한 후 커넥션을 통해 작업한 것을 최종 완료한다.
+          con.commit();
+        } catch (Exception e) {
+          // 만약 클라이언트 요청을 처리하는 동안에 예외가 발생했다면
+          // 커넥션을 통해 수행했던 모든 데이터 변경 작업을 취소한다.
+          out.printf("실행 오류! : %s\n", e.getMessage());
+        }
+        
         out.println("!end!");
         out.flush();
-
+        
       } catch (Exception e) {
+        try {
+          con.rollback();
+        } catch (SQLException e1) {
+          // rollback() 하다가 발생된 예외는 무시한다.
+        }
         System.out.println("명령어 실행 중 오류 발생 : " + e.toString());
         e.printStackTrace();
-      } // try(Socket)
+        
+      } finally {
+        // 클라이언트 요청을 모두 처리했으면 DB 커넥션 객체를 커넥션풀에 반납한다.
+        // 커넥션 객체를 close() 해서는 안된다.
+        // 왜? 다음에 다시 사용해야 하기 때문이다.
+        dataSource.returnConnection(con);
+        System.out.println("DB 커넥션을 커넥션풀에 반납");
+      }
     }
   }
 }

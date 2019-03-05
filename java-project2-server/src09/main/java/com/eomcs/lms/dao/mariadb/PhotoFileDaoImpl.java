@@ -19,11 +19,14 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
 
   @Override
   public List<PhotoFile> findByPhotoBoardNo(int photoBoardNo) {
-    try (PreparedStatement stmt = con.prepareStatement("select photo_file_id, photo_id, file_path"
-        + " from lms_photo_file" + " where photo_id= ?" + " order by photo_file_id desc")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select photo_file_id, photo_id, file_path"
+        + " from lms_photo_file"
+        + " where photo_id = ? "
+        + " order by photo_file_id asc")) {
 
-      stmt.setInt(1, photoBoardNo); // 특정 사진 게시물에 대해 첨부파일 가져오기
-
+      stmt.setInt(1, photoBoardNo); // 특정 사진 게시물에 대해 첨부파일을 가져오기
+      
       try (ResultSet rs = stmt.executeQuery()) {
 
         ArrayList<PhotoFile> list = new ArrayList<>();
@@ -31,7 +34,7 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
           PhotoFile photoFile = new PhotoFile();
           photoFile.setNo(rs.getInt("photo_file_id"));
           photoFile.setPhotoBoardNo(rs.getInt("photo_id"));
-          photoFile.setFilepath(rs.getString("file_path"));
+          photoFile.setFilePath(rs.getString("file_path"));
 
           list.add(photoFile);
         }
@@ -44,27 +47,30 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
 
   @Override
   public void insert(PhotoFile photoFile) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("insert into lms_photo_file(file_path, photo_id) values(?,?)")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into lms_photo_file(file_path,photo_id) values(?,?)")) {
 
-      stmt.setString(1, photoFile.getFilepath());
+      stmt.setString(1, photoFile.getFilePath());
       stmt.setInt(2, photoFile.getPhotoBoardNo());
       stmt.executeUpdate();
-
+      
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
+  @Override
   public int deleteByPhotoBoardNo(int photoBoardNo) {
-    try (PreparedStatement stmt =
-        con.prepareStatement("delete from lms_photo_file where photo_id = ?")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "delete from lms_photo_file where photo_id = ?")) {
 
       stmt.setInt(1, photoBoardNo);
 
       return stmt.executeUpdate();
+      
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
+
 }

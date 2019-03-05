@@ -8,23 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
+import com.eomcs.util.DataSource;
 
 public class LessonDaoImpl implements LessonDao {
+  
+  // DataSource 의존 객체 선언
+  DataSource dataSource;
 
-  // DAO가 사용하는 커넥션 객체를 외부에서 주입 받는다.
-  Connection con;
-  
-  public LessonDaoImpl(Connection con) {
-    this.con = con;
-  }
-  
+ public LessonDaoImpl(DataSource dataSource) {
+   this.dataSource = dataSource;
+ }
+
   public List<Lesson> findAll() {
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "select lesson_id, titl, sdt, edt, tot_hr from lms_lesson"
-        + " order by lesson_id desc")) {
-      
+        "select lesson_id, titl, sdt, edt, tot_hr from lms_lesson" + " order by lesson_id desc")) {
+
       try (ResultSet rs = stmt.executeQuery()) {
-        
+
         ArrayList<Lesson> list = new ArrayList<>();
         while (rs.next()) {
           Lesson lesson = new Lesson();
@@ -33,7 +34,7 @@ public class LessonDaoImpl implements LessonDao {
           lesson.setStartDate(rs.getDate("sdt"));
           lesson.setEndDate(rs.getDate("edt"));
           lesson.setTotalHours(rs.getInt("tot_hr"));
-          
+
           list.add(lesson);
         }
         return list;
@@ -44,34 +45,34 @@ public class LessonDaoImpl implements LessonDao {
   }
 
   public void insert(Lesson lesson) {
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "insert into lms_lesson(titl,conts,sdt,edt,tot_hr,day_hr)"
-        + " values(?,?,?,?,?,?)")) {
-      
+        "insert into lms_lesson(titl,conts,sdt,edt,tot_hr,day_hr)" + " values(?,?,?,?,?,?)")) {
+
       stmt.setString(1, lesson.getTitle());
       stmt.setString(2, lesson.getContents());
-      stmt.setDate(3,lesson.getStartDate());
+      stmt.setDate(3, lesson.getStartDate());
       stmt.setDate(4, lesson.getEndDate());
       stmt.setInt(5, lesson.getTotalHours());
       stmt.setInt(6, lesson.getDayHours());
-      
+
       stmt.executeUpdate();
-      
+
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
   public Lesson findByNo(int no) {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "select lesson_id, titl, conts, sdt, edt, tot_hr, day_hr"
-        + " from lms_lesson"
-        + " where lesson_id = ?")) {
-      
+    Connection con = dataSource.getConnection();
+    try (PreparedStatement stmt =
+        con.prepareStatement("select lesson_id, titl, conts, sdt, edt, tot_hr, day_hr"
+            + " from lms_lesson" + " where lesson_id = ?")) {
+
       stmt.setInt(1, no);
-      
+
       try (ResultSet rs = stmt.executeQuery()) {
-      
+
         if (rs.next()) {
           Lesson lesson = new Lesson();
           lesson.setNo(rs.getInt("lesson_id"));
@@ -82,7 +83,7 @@ public class LessonDaoImpl implements LessonDao {
           lesson.setTotalHours(rs.getInt("tot_hr"));
           lesson.setDayHours(rs.getInt("day_hr"));
           return lesson;
-          
+
         } else {
           return null;
         }
@@ -93,16 +94,11 @@ public class LessonDaoImpl implements LessonDao {
   }
 
   public int update(Lesson lesson) {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "update lms_lesson set"
-        + " titl = ?,"
-        + " conts = ?,"
-        + " sdt = ?,"
-        + " edt = ?,"
-        + " tot_hr = ?,"
-        + " day_hr = ?"
-        + " where lesson_id = ?")) {
-      
+    Connection con = dataSource.getConnection();
+    try (PreparedStatement stmt =
+        con.prepareStatement("update lms_lesson set" + " titl = ?," + " conts = ?," + " sdt = ?,"
+            + " edt = ?," + " tot_hr = ?," + " day_hr = ?" + " where lesson_id = ?")) {
+
       stmt.setString(1, lesson.getTitle());
       stmt.setString(2, lesson.getContents());
       stmt.setDate(3, lesson.getStartDate());
@@ -110,7 +106,7 @@ public class LessonDaoImpl implements LessonDao {
       stmt.setInt(5, lesson.getTotalHours());
       stmt.setInt(6, lesson.getDayHours());
       stmt.setInt(7, lesson.getNo());
-      
+
       return stmt.executeUpdate();
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -118,23 +114,17 @@ public class LessonDaoImpl implements LessonDao {
   }
 
   public int delete(int no) {
-    try (PreparedStatement stmt = con.prepareStatement(
-        "delete from lms_lesson where lesson_id = ?")) {
-      
+    Connection con = dataSource.getConnection();
+    try (PreparedStatement stmt =
+        con.prepareStatement("delete from lms_lesson where lesson_id = ?")) {
+
       stmt.setInt(1, no);
-      
+
       return stmt.executeUpdate();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 }
-
-
-
-
-
-
-
 
 

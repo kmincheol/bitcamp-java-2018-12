@@ -48,13 +48,35 @@
 		insert into x_board(title, contents)
 		value(#{title},#{contents})
 	</insert>
-	
-	<!-- 파라미터 타입이 map인 경우, in-parameter를 지정할 때  #{key} 로 사용하면 된다. -->
+
+	<!-- 파라미터 타입이 map인 경우, in-parameter를 지정할 때 #{key} 로 사용하면 된다. -->
 	<insert id="insert2" parameterType="hashmap">
-    insert into x_board(title, contents)
-    value(#{title},#{contents})
-  </insert>
-	
+		insert into x_board(title,
+		contents)
+		value(#{title},#{contents})
+	</insert>
+
+	<update id="update" parameterType="board">
+		update x_board set
+		title=#{title}, contents=#{contents}
+		where board_id=#{no}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from x_board
+		where
+		board_id=#{value}
+	</delete>
+
+	<!-- insert 실행 후 자동 생성된 PK값 리턴받기 -->
+	<!-- 파라미터로 전달된 객체를 통해 리턴 받는다. -->
+	<insert id="insert3" parameterType="board"
+		useGeneratedKeys="true" keyColumn="board_id" keyProperty="no">
+		insert into
+		x_board(title,
+		contents)
+		value(#{title},#{contents})
+	</insert>
 </mapper>
 
 

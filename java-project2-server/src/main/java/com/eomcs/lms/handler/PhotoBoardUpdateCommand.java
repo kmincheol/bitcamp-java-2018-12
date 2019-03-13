@@ -19,6 +19,7 @@ public class PhotoBoardUpdateCommand extends AbstractCommand {
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
     this.txManager = txManager;
+    this.name = "/photoboard/update";
   }
 
   @Override
@@ -77,8 +78,9 @@ public class PhotoBoardUpdateCommand extends AbstractCommand {
 
           photoFiles.add(file);
         }
-        // 한 번에 파일 정보를 insert한다.
+        // 한 번에 파일 정보를 insert 한다.
         photoFileDao.insert(photoFiles);
+
       }
 
       response.println("변경했습니다.");

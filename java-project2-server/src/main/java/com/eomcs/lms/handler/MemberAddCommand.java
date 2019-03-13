@@ -1,4 +1,5 @@
 package com.eomcs.lms.handler;
+
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
@@ -8,6 +9,7 @@ public class MemberAddCommand extends AbstractCommand {
 
   public MemberAddCommand(MemberDao memberDao) {
     this.memberDao = memberDao;
+    this.name = "/member/add";
   }
 
   @Override

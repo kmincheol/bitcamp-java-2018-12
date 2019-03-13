@@ -1,4 +1,5 @@
 package com.eomcs.lms.handler;
+
 import com.eomcs.lms.dao.MemberDao;
 
 public class MemberDeleteCommand extends AbstractCommand {
@@ -7,6 +8,7 @@ public class MemberDeleteCommand extends AbstractCommand {
 
   public MemberDeleteCommand(MemberDao memberDao) {
     this.memberDao = memberDao;
+    this.name = "/member/delete";
   }
 
   @Override

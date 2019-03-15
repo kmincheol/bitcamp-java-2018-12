@@ -5,10 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// IoC 컨테이너가 관리할 객체에 붙이는 애노테이션이다.
-// IoC 컨테이너는 이 애노테이션이 붙은 클래스에 대해 인스턴스를 자동으로 생성할 것이다.
+// IoC 컨테이너에게 객체를 생성하기 위해 뒤져야 할 패키지 이름을 알려줄 때 사용한다.
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Component {
-  String value() default "";
+public @interface ComponentScan {
+  String[] basePackages();
 }

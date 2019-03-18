@@ -22,6 +22,9 @@ dependencies {
     
     // Mybatis persistence framework
     compile group: 'org.mybatis', name: 'mybatis', version: '3.5.0'
+    
+    // spring-context
+    compile group: 'org.springframework', name: 'spring-context', version: '5.1.5.RELEASE'
 }
 
 // 만약 Gradle을 사용하여 프로젝트를 실행한다면 다음 클래스가 실행될 것이다.

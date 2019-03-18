@@ -31,6 +31,15 @@ public class Car {
     this.model = model;
   }
 
+  public Car(String maker, String model, int cc, int valve, boolean auto) {
+    System.out.println("ch29.c.Car(String, String, int, int, boolean");
+    this.maker = maker;
+    this.model = model;
+    this.cc = cc;
+    this.valve = valve;
+    this.auto = auto;
+  }
+
   public String getMaker() {
     return maker;
   }

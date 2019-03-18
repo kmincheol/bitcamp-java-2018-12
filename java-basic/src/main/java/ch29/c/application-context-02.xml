@@ -40,7 +40,8 @@
     <constructor-arg type="String"><value>비트자동차</value></constructor-arg>
   </bean>
   
-  <!-- 생성자의 파라미터 값의 순서를 명시해야 할 경우 index 속성을 사용하라
+  <!-- 생성자의 파라미터 타입 순서에 따라 정확하게 생성자를 호출해야 하거나 호출하고 싶다면
+       index 속성을 사용하여 생성자의 파라미터 값 순서를 명시하라.
        그러면 그 순서에 맞는 생성자를 정확하게 찾아 호출할 것이다. -->
   <bean id="c5" class="ch29.c.Car"> <!-- Car(int, String) -->
     <constructor-arg type="int" index="0"><value>1980</value></constructor-arg>

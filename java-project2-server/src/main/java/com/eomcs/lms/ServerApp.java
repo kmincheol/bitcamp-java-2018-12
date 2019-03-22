@@ -1,25 +1,9 @@
-// 28단계: Log4J 2.x 적용하기
-// => 애플리케이션을 실행하는 중에 내부 상태를 확인할 목적으로 
-//    기록을 남기는 것을 "로깅(logging)"이라 한다.
-// => 로깅은 애플리케이션을 실행하는 콘솔창으로 출력할 수도 있고,
-//    파일이나 네트웍으로도 출력할 수 있다.
-// => 보통 실무에서는 파일로 기록을 남긴다.
-// => 로깅 작업을 도와주는 대표적인 라이브러리가 log4j 이다.
-//    출력 레벨에 따라 로깅을 조절할 수 있어 편리하다.
+// 30단계: HTTP 프로토콜을 적용하여 클라이언트를 웹브라우저로 변경하기
 // 
 // 작업
-// 1) log4j 1.x 라이브러리를 추가한다.
-//    => mvnrepository.com 에서 log4j 검색한다.
-//    => build.gradle에 라이브러리 추가한다.
-//    => '$ gradle eclipse' 실행한다.
-//    => 이클립스 프로젝트 갱신한다.
-// 2) Log4J2 설정 파일 준비한다.
-//    => CLASSPATH 루트 패키지에 log4j2.xml 파일을 생성한다.
-//       예) src/main/resources/log4j2.xml
-// 3) Mybatis에서 사용할 로깅 라이브러리 지정하기
-//    => SqlSessionFactory 객체를 생성할 때 어떤 로깅 라이브러리를 사용할 지 지정한다.
-//    => MybatisConfig.java 에서 SqlSessionFactory 생성하는 메서드 안에 다음 코드 추가한다. 
-//         LogFactory.useLog4J2Logging();  
+// 1) RequestHandlerThread 변경하기
+//    => HTTP 프로토콜에 따라서 클라이언트 요청을 읽고 응답한다.
+//
 package com.eomcs.lms;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -98,21 +82,39 @@ public class ServerApp {
           PrintWriter out = new PrintWriter(socket.getOutputStream())) {
 
         // 클라이언트의 요청 읽기
-        String request = in.readLine();
+        String requestLine = in.readLine();
+        logger.debug(requestLine);
         
+        while (true) {
+          String str = in.readLine();
+          if (str.length() == 0) // 요청의 끝을 만나면 읽기를 멈춘다. 
+            break;
+        }
+        
+        String commandPath = requestLine.split(" ")[1]; 
+            
         // 클라이언트에게 응답하기
+        // => HTTP 프로토콜에 따라 응답 헤더를 출력한다.
+        
         // => 클라이언트 요청을 처리할 메서드를 꺼낸다.
-        RequestMappingHandler requestHandler = handlerMapping.get(request);
+        RequestMappingHandler requestHandler = handlerMapping.get(commandPath);
         
         if (requestHandler == null) {
+          out.println("HTTP/1.1 404 Not Found");
+          out.println("Server: bitcamp");
+          out.println("Content-Type: text/plain; charset=UTF-8");
+          out.println();
           out.println("실행할 수 없는 명령입니다.");
-          out.println("!end!");
           out.flush();
           return;
         }
         
         try {
           // 클라이언트 요청을 처리할 메서드를 찾았다면 호출한다.
+          out.println("HTTP/1.1 200 OK");
+          out.println("Server: bitcamp");
+          out.println("Content-Type: text/html; charset=UTF-8");
+          out.println();
           requestHandler.method.invoke(
               requestHandler.bean, // 메서드를 호출할 때 사용할 인스턴스 
               new Response(in, out)); // 메서드 파라미터 값
@@ -121,8 +123,6 @@ public class ServerApp {
           out.printf("실행 오류! : %s\n", e.getMessage());
           e.printStackTrace();
         }
-        
-        out.println("!end!");
         out.flush();
         
       } catch (Exception e) {

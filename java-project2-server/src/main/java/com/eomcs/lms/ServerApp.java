@@ -93,14 +93,13 @@ public class ServerApp {
         }
         
         // 예) GET /member/list HTTP/1.1
-        // 예) GET /member/detail?no=10
+        // 예) GET /member/detail?no=10 HTTP/1.1
         // 예) GET /member/add?name=aaa&email=aaa@test.com&password=1111 HTTP/1.1
         // => requestURI[0] : /board/detail
         // => requestURI[1] : no=1
         String[] requestURI = requestLine.split(" ")[1].split("\\?");
         String commandPath = requestURI[0];
-        
-        
+            
         // 클라이언트에게 응답하기
         // => HTTP 프로토콜에 따라 응답 헤더를 출력한다.
         
@@ -120,9 +119,11 @@ public class ServerApp {
         try {
           // 요청을 처리할 메서드가 사용할 Request, Response 준비하기
           ServletRequest request = new ServletRequest();
-          if(requestURI.length>1) {
-            request.setQueryString(requestURI[1]);
+          if (requestURI.length > 1) {
+            // 예) name=aaa&email=aaa@test.com&password=1111
+            request.setQueryString(requestURI[1]); 
           }
+
           ServletResponse response = new ServletResponse(in, out);
           
           // 클라이언트 요청을 처리할 메서드를 찾았다면 호출한다.

@@ -21,12 +21,12 @@ public class BoardDetailServlet extends HttpServlet {
 
     int no = Integer.parseInt(request.getParameter("no"));
 
- // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
+    // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     BoardService boardService = ServerApp.iocContainer.getBean(BoardService.class);
     Board board = boardService.get(no);
-    
+
     response.setContentType("text/html;charset=UTF-8");
-    
+
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 조회</title></head>");
     out.println("<body><h1>게시물 조회</h1>");

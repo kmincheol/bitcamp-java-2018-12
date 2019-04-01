@@ -29,6 +29,7 @@ public class LessonDetailServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
 
     PrintWriter out = response.getWriter();
+    
     out.println("<html><head><title>수업 조회</title></head>");
     out.println("<body><h1>수업 조회</h1>");
 

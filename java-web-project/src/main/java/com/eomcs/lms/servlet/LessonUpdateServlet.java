@@ -33,7 +33,7 @@ public class LessonUpdateServlet extends HttpServlet {
     lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
 
     response.setContentType("text/html;charset=UTF-8");
-    
+
     PrintWriter out = response.getWriter();
     out.println("<html><head>" + "<title>수업 변경</title>"
         + "<meta http-equiv='Refresh' content='1;url=list'>" + "</head>");

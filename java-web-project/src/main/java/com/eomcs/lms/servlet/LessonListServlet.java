@@ -19,14 +19,14 @@ public class LessonListServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     // Spring IoC 컨테이너에서 LessonService 객체를 꺼낸다.
     LessonService lessonService = ServerApp.iocContainer.getBean(LessonService.class);
-    
+
     List<Lesson> lessons = lessonService.list();
 
     response.setContentType("text/html;charset=UTF-8");
-    
+
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>수업 목록</title></head>");
     out.println("<body><h1>수업 목록</h1>");

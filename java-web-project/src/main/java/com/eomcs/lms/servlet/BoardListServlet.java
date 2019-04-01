@@ -19,14 +19,14 @@ public class BoardListServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     BoardService boardService = ServerApp.iocContainer.getBean(BoardService.class);
 
     List<Board> boards = boardService.list();
-    
+
     response.setContentType("text/html;charset=UTF-8");
-    
+
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 목록</title></head>");
     out.println("<body><h1>게시물 목록</h1>");

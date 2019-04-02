@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import com.eomcs.lms.InitServlet;
+import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
@@ -25,21 +26,21 @@ import com.eomcs.lms.service.PhotoBoardService;
 @SuppressWarnings("serial")
 public class PhotoBoardAddServlet extends HttpServlet {
 
-  String uploadDir; 
-      
+  String uploadDir;
+
   @Override
   public void init() throws ServletException {
-    this.uploadDir = this.getServletContext().getRealPath(
-        "/upload/photoboard");
+    this.uploadDir = this.getServletContext().getRealPath("/upload/photoboard");
   }
-  
+
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    LessonService lessonService = 
-        InitServlet.iocContainer.getBean(LessonService.class);
-    
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    LessonService lessonService = iocContainer.getBean(LessonService.class);
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
@@ -53,13 +54,12 @@ public class PhotoBoardAddServlet extends HttpServlet {
     out.println("  <th>수업</th>");
     out.println("  <td><select name='lessonNo'>");
     out.println("      <option value='0'>수업을 선택하세요</option>");
-    
+
     List<Lesson> lessons = lessonService.list();
     for (Lesson lesson : lessons) {
-      out.printf("      <option value='%d'>%s</option>", 
-          lesson.getNo(), lesson.getTitle());
+      out.printf("      <option value='%d'>%s</option>", lesson.getNo(), lesson.getTitle());
     }
-    
+
     out.println("  </select></td>");
     out.println("</tr>");
     out.println("<tr>");
@@ -103,7 +103,9 @@ public class PhotoBoardAddServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    PhotoBoardService photoBoardService = InitServlet.iocContainer.getBean(PhotoBoardService.class);
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
 
     PhotoBoard board = new PhotoBoard();
     board.setTitle(request.getParameter("title"));
@@ -111,14 +113,14 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     ArrayList<PhotoFile> files = new ArrayList<>();
     Collection<Part> photos = request.getParts();
-    
+
     for (Part photo : photos) {
-      if (photo.getSize() == 0 || !photo.getName().equals("photo")) 
+      if (photo.getSize() == 0 || !photo.getName().equals("photo"))
         continue;
-      
+
       String filename = UUID.randomUUID().toString();
       photo.write(uploadDir + "/" + filename);
-      
+
       PhotoFile file = new PhotoFile();
       file.setFilePath(filename);
       files.add(file);
@@ -133,13 +135,14 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     if (board.getLessonNo() == 0) {
       out.println("<p>사진 또는 파일을 등록할 수업을 선택하세요.</p>");
-      
+
     } else if (files.size() == 0) {
       out.println("<p>최소 한 개의 사진 파일을 등록해야 합니다.</p>");
 
     } else {
       photoBoardService.add(board);
-      out.println("<p>저장하였습니다.</p>");
+      response.sendRedirect("list");
+      return;
     }
     out.println("</body></html>");
   }

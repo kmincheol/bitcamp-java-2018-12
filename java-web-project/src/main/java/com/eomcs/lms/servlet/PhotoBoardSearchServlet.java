@@ -1,13 +1,15 @@
 package com.eomcs.lms.servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.eomcs.lms.InitServlet;
+import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.service.PhotoBoardService;
 
@@ -16,12 +18,12 @@ import com.eomcs.lms.service.PhotoBoardService;
 public class PhotoBoardSearchServlet extends HttpServlet {
 
   @Override
-  protected void doGet(
-      HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
-    PhotoBoardService photoBoardService = 
-        InitServlet.iocContainer.getBean(PhotoBoardService.class);
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
 
     int lessonNo = 0;
     try {
@@ -50,11 +52,8 @@ public class PhotoBoardSearchServlet extends HttpServlet {
       out.println(String.format(
           "<tr><td>%d</td><td><a href='detail?no=%1$d'>%s</a>"
               + "</td><td>%s</td><td>%d</td><td>%d</td></tr>",
-              board.getNo(), 
-              board.getTitle(), 
-              board.getCreatedDate(), 
-              board.getViewCount(),
-              board.getLessonNo()));
+          board.getNo(), board.getTitle(), board.getCreatedDate(), board.getViewCount(),
+          board.getLessonNo()));
     }
     out.println("</table>");
     out.println("<p><a href='list'>목록</a></p>");

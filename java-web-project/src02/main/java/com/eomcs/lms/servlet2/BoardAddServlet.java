@@ -38,9 +38,3 @@ public class BoardAddServlet extends HttpServlet {
 
 
 
-
-
-
-
-
-

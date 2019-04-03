@@ -24,9 +24,13 @@ public class LessonAddServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
-    out.println("<htm>");
+    out.println("<html>");
     out.println("<head><title>새 수업</title></head>");
+
     out.println("<body>");
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+
     out.println("<h1>새 수업</h1>");
     out.println("<form action='add' method='post'>");
     out.println("<table border='1'>");

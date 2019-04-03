@@ -32,6 +32,11 @@ public class BoardListServlet extends HttpServlet {
     PrintWriter out = response.getWriter();
 
     out.println("<html><head><title>게시물 목록</title></head>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
     out.println("<body><h1>게시물 목록</h1>");
     out.println("<p><a href='add'>새 글</a></p>");
     out.println("<table border='1'>");

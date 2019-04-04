@@ -89,7 +89,4 @@ public class LessonAddServlet extends HttpServlet {
 
     response.sendRedirect("list");
   }
-
-
-
 }

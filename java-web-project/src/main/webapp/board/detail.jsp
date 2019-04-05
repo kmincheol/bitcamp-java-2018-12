@@ -5,13 +5,16 @@
   Board board = (Board) request.getAttribute("board");
 %>
 <!DOCTYPE html>
-
 <html>
 <head>
-<title>게시물 조회(JSP)</title>
-
+<title>게시물 조회</title>
 </head>
 <body>
+
+  <jsp:include page="/header.jsp" />
+
+  <h1>게시물 조회(JSP)</h1>
+
   <%
     if (board == null) {
   %>
@@ -19,10 +22,6 @@
   <%
     } else {
   %>
-  <%
-    request.getRequestDispatcher("/header").include(request, response);
-  %>
-  <h1>게시물 조회(JSP)</h1>
   <form action='update' method='post'>
     <table border='1'>
       <tr>

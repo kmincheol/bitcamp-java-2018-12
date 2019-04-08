@@ -6,11 +6,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
-<%
-  PhotoBoard photoBoard = (PhotoBoard) request.getAttribute("photoBoard");
-  List<Lesson> lessons = (List<Lesson>) request.getAttribute("lessons");
-  List<PhotoFile> files = (List<PhotoFile>) request.getAttribute("files");
-%>
 <html>
 <head>
 <title>사진 조회(JSP)</title>
@@ -18,7 +13,11 @@
 <body>
 
   <jsp:include page="/header.jsp" />
-  <h1>사진 조회(JSP)</h1>
+  <h1>사진 조회(JSP2)</h1>
+
+  <jsp:useBean scope="request" id="photoBoard" type="com.eomcs.lms.domain.PhotoBoard" />
+  <jsp:useBean scope="request" id="lessons" type="java.util.List<Lesson>" />
+  <jsp:useBean scope="request" id="files" type="java.util.List<PhotoFile>" />
 
   <form action='update' method='post' enctype='multipart/form-data'>
     <table border='1'>

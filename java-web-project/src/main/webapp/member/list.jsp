@@ -3,15 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
-<%
-  List<Member> members = (List<Member>) request.getAttribute("list");
-%>
 <html>
 <head>
 <title>회원 목록(JSP)</title>
 </head>
 
-<h1>회원 목록(JSP)</h1>
+<h1>회원 목록(JSP2)</h1>
 
 <body>
   <jsp:include page="/header.jsp" />
@@ -28,15 +25,16 @@
       <th>전화</th>
       <th>가입일</th>
     </tr>
+    <jsp:useBean scope="request" id="list" type="java.util.List<Member>" />
     <%
-      for (Member m : members) {
+      for (Member member : list) {
     %>
     <tr>
-      <td><%=m.getNo()%></td>
-      <td><a href='detail?no=<%=m.getNo()%>'><%=m.getName()%></a></td>
-      <td><%=m.getEmail()%></td>
-      <td><%=m.getTel()%></td>
-      <td><%=m.getRegisteredDate()%></td>
+      <td><%=member.getNo()%></td>
+      <td><a href='detail?no=<%=member.getNo()%>'><%=member.getName()%></a></td>
+      <td><%=member.getEmail()%></td>
+      <td><%=member.getTel()%></td>
+      <td><%=member.getRegisteredDate()%></td>
     </tr>
     <%
       }

@@ -3,16 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
-<%
-  List<PhotoBoard> photoBoards = (List<PhotoBoard>) request.getAttribute("photoBoards");
-%>
 <html>
 <head>
 <title>사진 목록(JSP)</title>
 </head>
 <body>
   <jsp:include page="/header.jsp" />
-  <h1>사진 목록(JSP)</h1>
+  <h1>사진 목록(JSP2)</h1>
 
   <p>
     <a href='add'>사진 추가</a>
@@ -25,16 +22,16 @@
       <th>조회수</th>
       <th>수업 번호</th>
     </tr>
-
+    <jsp:useBean scope="request" id="photoBoards" type="java.util.List<PhotoBoard>" />
     <%
-      for (PhotoBoard p : photoBoards) {
+      for (PhotoBoard board : photoBoards) {
     %>
     <tr>
-      <td><%=p.getNo()%></td>
-      <td><a href='detail?no=<%=p.getNo()%>'><%=p.getTitle()%></a></td>
-      <td><%=p.getCreatedDate()%></td>
-      <td><%=p.getViewCount()%></td>
-      <td><%=p.getLessonNo()%></td>
+      <td><%=board.getNo()%></td>
+      <td><a href='detail?no=<%=board.getNo()%>'><%=board.getTitle()%></a></td>
+      <td><%=board.getCreatedDate()%></td>
+      <td><%=board.getViewCount()%></td>
+      <td><%=board.getLessonNo()%></td>
     </tr>
     <%
       }

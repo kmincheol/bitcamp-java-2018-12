@@ -21,15 +21,14 @@ public class LessonListServlet extends HttpServlet {
       throws ServletException, IOException {
 
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     LessonService lessonService = iocContainer.getBean(LessonService.class);
     List<Lesson> lessons = lessonService.list();
-
+    
     request.setAttribute("list", lessons);
-
-    response.setContentType("text/html;charset=UTF-8");
-
-    // JSP의 실행을 포함시킨다.
-    request.getRequestDispatcher("/lesson/list.jsp").include(request, response);
+    
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "/lesson/list.jsp");
   }
 }

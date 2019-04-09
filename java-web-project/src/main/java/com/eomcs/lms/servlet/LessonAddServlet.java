@@ -19,9 +19,8 @@ public class LessonAddServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/lesson/form.jsp").include(request, response);
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "/lesson/form.jsp");
   }
 
   @Override
@@ -29,7 +28,8 @@ public class LessonAddServlet extends HttpServlet {
       throws ServletException, IOException {
 
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     LessonService lessonService = iocContainer.getBean(LessonService.class);
 
     Lesson lesson = new Lesson();
@@ -42,7 +42,8 @@ public class LessonAddServlet extends HttpServlet {
 
     lessonService.add(lesson);
 
-    response.sendRedirect("list");
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "redirect:list");
   }
 
 

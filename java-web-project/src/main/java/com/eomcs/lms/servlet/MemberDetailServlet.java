@@ -1,5 +1,4 @@
 package com.eomcs.lms.servlet;
-
 import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,11 +25,9 @@ public class MemberDetailServlet extends HttpServlet {
     int no = Integer.parseInt(request.getParameter("no"));
 
     Member member = memberService.get(no);
-
     request.setAttribute("member", member);
-
-    response.setContentType("text/html;charset=UTF-8");
-
-    request.getRequestDispatcher("/member/detail.jsp").include(request, response);
+    
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "/member/detail.jsp");
   }
 }

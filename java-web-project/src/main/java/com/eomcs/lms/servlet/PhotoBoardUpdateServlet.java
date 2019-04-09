@@ -1,7 +1,6 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -34,12 +33,10 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+    // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     ServletContext sc = this.getServletContext();
     ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
-
-    response.setContentType("text/html;charset=UTF-8");
-
     PhotoBoard board = new PhotoBoard();
     board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setTitle(request.getParameter("title"));
@@ -68,12 +65,12 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       return;
     }
 
-    PrintWriter out = response.getWriter();
-    out.println("<html><head>" + "<title>사진 변경</title>"
-        + "<meta http-equiv='Refresh' content='1;url=list'>" + "</head>");
-    out.println("<body><h1>사진 변경</h1>");
-    out.println("<p>최소 한 개의 사진 파일을 등록해야 합니다.</p>");
-    out.println("</body></html>");
+    // 오류 내용을 출력하는 JSP로 포워딩한다.
+    request.setAttribute("error.Title", "사진 변경");
+    request.setAttribute("error.content", "최소 한 개의 사진 파일을 등록해야 합니다.");
+
+    request.getRequestDispatcher("/error.jsp").forward(request, response);
+
   }
 
 }

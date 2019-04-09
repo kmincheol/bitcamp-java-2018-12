@@ -2,7 +2,6 @@ package com.eomcs.lms.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,16 +23,13 @@ public class LessonListServlet extends HttpServlet {
     ServletContext sc = this.getServletContext();
     ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
     LessonService lessonService = iocContainer.getBean(LessonService.class);
-
     List<Lesson> lessons = lessonService.list();
 
-    // JSP가 게시물 목록을 다룰 수 있도록 ServletRequest 보관소에 저장한다.
     request.setAttribute("list", lessons);
 
     response.setContentType("text/html;charset=UTF-8");
 
     // JSP의 실행을 포함시킨다.
-    RequestDispatcher rd = request.getRequestDispatcher("/lesson/list.jsp");
-    rd.include(request, response);
+    request.getRequestDispatcher("/lesson/list.jsp").include(request, response);
   }
 }

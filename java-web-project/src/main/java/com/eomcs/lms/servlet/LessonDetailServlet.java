@@ -31,8 +31,8 @@ public class LessonDetailServlet extends HttpServlet {
     request.setAttribute("lesson", lesson);
 
     response.setContentType("text/html;charset=UTF-8");
-
     // JSP의 실행을 포함시킨다.
     request.getRequestDispatcher("/lesson/detail.jsp").include(request, response);
   }
+
 }

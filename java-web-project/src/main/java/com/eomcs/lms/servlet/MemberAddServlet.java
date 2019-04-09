@@ -1,8 +1,8 @@
 package com.eomcs.lms.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -23,20 +23,15 @@ public class MemberAddServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    request.getRequestDispatcher("form.jsp").include(request, response);
-
-  } // doGet
-
+    request.getRequestDispatcher("/member/form.jsp").include(request, response);
+  }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
-    MemberService memberService =
-        ((ApplicationContext) this.getServletContext().getAttribute("iocContainer"))
-            .getBean(MemberService.class);
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    MemberService memberService = iocContainer.getBean(MemberService.class);
 
     Member member = new Member();
     member.setName(request.getParameter("name"));
@@ -53,8 +48,8 @@ public class MemberAddServlet extends HttpServlet {
     }
 
     memberService.add(member);
-    response.sendRedirect("list");
-  } // doPost
 
+    response.sendRedirect("list");
+  }
 
 }

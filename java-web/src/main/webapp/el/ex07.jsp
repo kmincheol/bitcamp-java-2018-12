@@ -21,8 +21,8 @@ pageContext.setAttribute("map", map);
 %>
 
 ${map["s01"]}<br>
-${map['s02']}<br>
-${map.s03}<br>
+${map['s01']}<br>
+${map.s01}<br>
 </body>
 </html>
 

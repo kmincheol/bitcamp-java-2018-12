@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-  trimDirectiveWhitespaces="true"%>
+<%@ page 
+    language="java" 
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    trimDirectiveWhitespaces="true"%>
 <%@ page import="bitcamp.vo.Board"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -9,28 +12,28 @@
 <title>ex11</title>
 </head>
 <body>
-  <h1>JSP 액션 태그 - jsp:useBean, jsp:setProperty</h1>
-  <%-- bitcamp.vo.Board 객체 생성하기 --%>
-  <jsp:useBean id="b1" class="bitcamp.vo.Board" scope="page" />
+<h1>JSP 액션 태그 - jsp:useBean, jsp:setProperty</h1>
+<%-- bitcamp.vo.Board 객체 생성하기 --%>
+<jsp:useBean id="b1" class="bitcamp.vo.Board" scope="page"/>
 
-  <%-- scope을 생략하면 기본이 page(PageContext)이다. --%>
-  <jsp:useBean id="b2" class="bitcamp.vo.Board" />
+<%-- scope을 생략하면 기본이 page(PageContext)이다. --%>
+<jsp:useBean id="b2" class="bitcamp.vo.Board"/>
 
-  <jsp:useBean id="b3" class="bitcamp.vo.Board" />
+<jsp:useBean id="b3" class="bitcamp.vo.Board"/>
 
-  <%-- 객체의 setter 메서드를 호출하기 --%>
-  <jsp:setProperty name="b3" property="no" value="100" />
-  <jsp:setProperty name="b3" property="contents" value="내용입니다." />
-  <jsp:setProperty name="b3" property="viewCount" value="88" />
-  <%-- 자바 원시 타입과 문자열을 제외한 속성의 값을 지정할 수 없다.
+<%-- 객체의 setter 메서드를 호출하기 --%>
+<jsp:setProperty name="b3" property="no" value="100"/>
+<jsp:setProperty name="b3" property="contents" value="내용입니다."/>
+<jsp:setProperty name="b3" property="viewCount" value="88"/>
+<%-- 자바 원시 타입과 문자열을 제외한 속성의 값을 지정할 수 없다.
      따로 처리해야 한다. --%>
-  <%-- 
+<%-- 
 <jsp:setProperty name="b3" property="createdDate" value="2019-4-8"/>
 --%>
 
-  <%=b1%><br>
-  <%=b2%><br>
-  <%=b3%><br>
+<%=b1%><br>
+<%=b2%><br>
+<%=b3%><br>
 
 </body>
 </html>

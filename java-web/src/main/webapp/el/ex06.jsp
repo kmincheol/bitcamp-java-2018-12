@@ -23,8 +23,6 @@ pageContext.setAttribute("names", nameList);
 ${names[0]}<br>
 ${names[1]}<br>
 ${names[2]}<br>
-
-<%-- 무시된다. --%>
 ${names[3]}<br>
 
 <%-- 보관소가 아닌 로컬 변수는 EL에서 사용할 수 없다. --%>

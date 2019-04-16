@@ -54,6 +54,10 @@ public class Test04 {
     String v2 = (String) b2.getValue();
     Date v3 = (Date) b3.getValue();
 
+    System.out.println(v1);
+    System.out.println(v2);
+    System.out.println(v3);
+
     // 제네릭이 적용된 Box2 클래스 이용
     // 먼저 Box2가 어떤 타입의 값을 다룰 것인지 지정해야 한다.
     Box2<String> x1 = new Box2<String>("홍길동");
@@ -61,47 +65,30 @@ public class Test04 {
     // 변수 선언에서 이미 어떤 타입을 다룰지 지정했기 때문에
     // new를 실행할 때는 굳이 또 타입을 지정할 필요가 없다. 생략해도 된다.
     Box2<String> x2 = new Box2<>("임꺽정");
-    
+
     Box2<String> x3;
-    x3 =  new Box2<>("유관순");
-    
+    x3 = new Box2<>("유관순");
     // 그런데 제네릭에 지정된 타입이 아닌 것을 넣으려 하면 컴파일 오류가 발생한다.
     // => 이것이 제네릭을 사용하는 이유이기도 하다.
     // => 즉 특정 클래스만 다루도록 제한할 수 있다.
     // Box2<String> x4 = new Box2<>(new Date()); // 컴파일 오류!
-    
+
     // 제네릭을 사용하면 getValue() 메서드가 각 타입별로 존재하는 것처럼 사용할 수 있다.
     // => 즉 형변환 할 필요가 없다.
     String y1 = x1.getValue();
     String y2 = x2.getValue();
     String y3 = x3.getValue();
-    
+    System.out.println(y1);
+    System.out.println(y2);
+    System.out.println(y3);
     Box2<Date> x4 = new Box2<>(new Date());
     Date y4 = x4.getValue(); // 형변환 할 필요가 없다.
-                                     // 마치 Date을 리턴하는 getValue()메서드가 있는 것 같다.
+                             // 마치 Date을 리턴하는 getValue()메서드가 있는 것 같다.
 
     // 제네릭은 다형성의 유연함을 그대로 유지하면서 특정 타입의 데이터를 다루도록
     // 도와주는 매우 편리한 문법이다.
-    
+
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

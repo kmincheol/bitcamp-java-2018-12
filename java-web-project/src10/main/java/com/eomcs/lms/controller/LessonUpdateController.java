@@ -9,13 +9,12 @@ import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
 
 @Controller("/lesson/update")
-public class LessonUpdateController implements pageController {
-
-  @Autowired
-  LessonService lessonService;
+public class LessonUpdateController implements PageController {
+  
+  @Autowired LessonService lessonService;
 
   @Override
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     Lesson lesson = new Lesson();
     lesson.setNo(Integer.parseInt(request.getParameter("no")));
@@ -28,6 +27,7 @@ public class LessonUpdateController implements pageController {
 
     if (lessonService.update(lesson) == 0)
       throw new Exception("해당 번호의 수업이 없습니다.");
+    
     return "redirect:list";
   }
 }

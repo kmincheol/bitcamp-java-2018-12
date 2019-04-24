@@ -1,5 +1,4 @@
 package com.eomcs.lms.controller;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +9,32 @@ import com.eomcs.lms.service.BoardService;
 
 @Controller
 public class BoardAddController {
-
-  @Autowired
-  BoardService boardService;
-
+  
+  @Autowired BoardService boardService;
+  
   @RequestMapping("/board/add")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
     if (request.getMethod().equals("GET")) {
       return "/board/form.jsp";
     }
-
+    
     Board board = new Board();
-    board.setContents(request.getParameter("contents") + ":" + request.getRemoteAddr());
-
+    board.setContents(request.getParameter("contents")
+        + ":" + request.getRemoteAddr());
+    
     boardService.add(board);
-
+    
     return "redirect:list";
   }
 }
+
+
+
+
+
+
+
+
 
 

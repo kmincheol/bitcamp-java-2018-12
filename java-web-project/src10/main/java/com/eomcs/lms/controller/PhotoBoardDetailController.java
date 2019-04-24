@@ -11,23 +11,20 @@ import com.eomcs.lms.service.LessonService;
 import com.eomcs.lms.service.PhotoBoardService;
 
 @Controller("/photoboard/detail")
-public class PhotoBoardDetailController implements pageController {
+public class PhotoBoardDetailController implements PageController {
 
-  @Autowired
-  PhotoBoardService photoBoardService;
-  @Autowired
-  LessonService lessonService;
-
+  @Autowired LessonService lessonService;
+  @Autowired PhotoBoardService photoBoardService;
+  
   @Override
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     int no = Integer.parseInt(request.getParameter("no"));
 
     PhotoBoard board = photoBoardService.get(no);
     List<Lesson> lessons = lessonService.list();
     request.setAttribute("board", board);
     request.setAttribute("lessons", lessons);
-
-    return "/photoboard/detail.jsp";
+    
+    return  "/photoboard/detail.jsp";
   }
 }

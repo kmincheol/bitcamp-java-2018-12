@@ -1,5 +1,4 @@
 package com.eomcs.lms.controller;
-
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +11,11 @@ import com.eomcs.lms.service.PhotoBoardService;
 @Controller
 public class PhotoBoardSearchController {
 
-  @Autowired
-  PhotoBoardService photoBoardService;
-
+  @Autowired PhotoBoardService photoBoardService;
+  
   @RequestMapping("/photoboard/search")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
     int lessonNo = 0;
     try {
       lessonNo = Integer.parseInt(request.getParameter("lessonNo"));
@@ -33,8 +32,8 @@ public class PhotoBoardSearchController {
 
     List<PhotoBoard> boards = photoBoardService.list(lessonNo, searchWord);
     request.setAttribute("list", boards);
-
-    return "/photoboard/list.jsp";
+    
+    return "/photoboard/search.jsp";
   }
 
 }

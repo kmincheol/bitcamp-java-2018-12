@@ -9,17 +9,17 @@ import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.service.LessonService;
 
 @Controller("/lesson/add")
-public class LessonAddController implements pageController {
-
-  @Autowired
-  LessonService lessonService;
+public class LessonAddController implements PageController {
+  
+  @Autowired LessonService lessonService;
 
   @Override
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
     if (request.getMethod().equals("GET")) {
       return "/lesson/form.jsp";
     }
-
+    
     Lesson lesson = new Lesson();
     lesson.setTitle(request.getParameter("title"));
     lesson.setContents(request.getParameter("contents"));
@@ -30,7 +30,6 @@ public class LessonAddController implements pageController {
 
     lessonService.add(lesson);
 
-    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
     return "redirect:list";
   }
 }

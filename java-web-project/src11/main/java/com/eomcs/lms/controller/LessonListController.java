@@ -11,17 +11,14 @@ import com.eomcs.lms.service.LessonService;
 
 @Controller
 public class LessonListController {
-
-  @Autowired
-  LessonService lessonService;
+  
+  @Autowired LessonService lessonService;
 
   @RequestMapping("/lesson/list")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     List<Lesson> lessons = lessonService.list();
-
+    
     request.setAttribute("list", lessons);
-
-    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
     return "/lesson/list.jsp";
   }
 }

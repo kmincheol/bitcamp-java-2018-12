@@ -3,7 +3,6 @@ package com.eomcs.lms.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -13,17 +12,13 @@ import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.PhotoBoardService;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 @Controller("/photoboard/update")
-public class PhotoBoardUpdateController implements pageController {
-
-  @Autowired
-  PhotoBoardService photoBoardService;
-
+public class PhotoBoardUpdateController implements PageController {
+  
+  @Autowired PhotoBoardService photoBoardService;
+  
   @Override
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-    String uploadDir = request.getServletContext().getRealPath("/upload/photoboard");
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     PhotoBoard board = new PhotoBoard();
     board.setNo(Integer.parseInt(request.getParameter("no")));
@@ -33,6 +28,9 @@ public class PhotoBoardUpdateController implements pageController {
     ArrayList<PhotoFile> files = new ArrayList<>();
     Collection<Part> photos = request.getParts();
 
+    String uploadDir = request.getServletContext().getRealPath(
+        "/upload/photoboard");
+    
     for (Part photo : photos) {
       if (photo.getSize() == 0 || !photo.getName().equals("photo"))
         continue;
@@ -47,9 +45,9 @@ public class PhotoBoardUpdateController implements pageController {
     }
     board.setFiles(files);
 
-    if (files.size() == 0) {
-      throw new Exception("최소 한개의 파일을 등록해야 합니다.");
-    }
+    if (files.size() == 0) 
+      throw new Exception("최소 한 개의 사진 파일을 등록해야 합니다.");
+    
     photoBoardService.update(board);
     return "redirect:list";
   }

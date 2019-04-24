@@ -10,16 +10,16 @@ import com.eomcs.lms.service.PhotoBoardService;
 @Controller
 public class PhotoBoardDeleteController {
 
-  @Autowired
-  PhotoBoardService photoBoardService;
-
+  @Autowired PhotoBoardService photoBoardService;
+  
   @RequestMapping("/photoboard/delete")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     int no = Integer.parseInt(request.getParameter("no"));
-
     if (photoBoardService.delete(no) == 0)
       throw new Exception("해당 번호의 사진이 없습니다.");
+      
     return "redirect:list";
   }
+
 }

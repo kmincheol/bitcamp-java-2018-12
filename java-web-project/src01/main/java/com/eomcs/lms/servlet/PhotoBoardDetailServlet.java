@@ -23,8 +23,10 @@ public class PhotoBoardDetailServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    PhotoBoardService photoBoardService = InitServlet.iocContainer.getBean(PhotoBoardService.class);
-    LessonService lessonService = InitServlet.iocContainer.getBean(LessonService.class);
+    PhotoBoardService photoBoardService = 
+        InitServlet.iocContainer.getBean(PhotoBoardService.class);
+    LessonService lessonService = 
+        InitServlet.iocContainer.getBean(LessonService.class);
     
     response.setContentType("text/html;charset=UTF-8");
 
@@ -40,7 +42,7 @@ public class PhotoBoardDetailServlet extends HttpServlet {
 
     if (board == null) {
       out.println("<p>해당 사진을 찾을 수 없습니다.</p>");
-      
+
     } else {
       out.println("<form action='update' method='post' enctype='multipart/form-data'>");
       out.println("<table border='1'>");
@@ -69,11 +71,15 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       for (Lesson lesson : lessons) {
         out.printf("      <option value='%d' %s>%s(%s ~ %s)</option>\n", 
             lesson.getNo(), 
-            board.getLessonNo()==lesson.getNo() ? "selected" : "",
+            board.getLessonNo() == lesson.getNo() ? "selected" : "",
             lesson.getTitle(),
-            lesson.getStartDate(),
+            lesson.getStartDate(), 
             lesson.getEndDate());
       }
+      
+      out.println("  </select></td>");
+      out.println("</tr>");      
+      
       
       out.println("<tr>");
       out.println("  <td colspan='2'>최소 한 개의 사진 파일을 등록해야 합니다.</td>");

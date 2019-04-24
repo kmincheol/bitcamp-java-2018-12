@@ -59,6 +59,7 @@ public class BoardDetailServlet extends HttpServlet {
       out.println("</form>");
     }
   }
+
 }
 
 

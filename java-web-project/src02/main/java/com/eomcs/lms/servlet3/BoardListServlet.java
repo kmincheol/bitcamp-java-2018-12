@@ -11,8 +11,8 @@ import com.eomcs.lms.InitServlet;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.service.BoardService;
 
-@SuppressWarnings("serial")
 @WebServlet("/board3/list")
+@SuppressWarnings("serial")
 public class BoardListServlet extends HttpServlet {
   
   @Override
@@ -46,8 +46,9 @@ public class BoardListServlet extends HttpServlet {
             board.getCreatedDate(), 
             board.getViewCount()));
     }
-
+    
     out.println("</table>");
+    
     request.getRequestDispatcher("/board3/footer").include(request, response);
     
     out.println("</body></html>");

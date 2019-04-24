@@ -1,8 +1,5 @@
 package com.eomcs.lms.controller;
-
 import java.util.UUID;
-import javax.servlet.ServletContext;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -12,15 +9,13 @@ import com.eomcs.lms.context.RequestMapping;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 @Controller
 public class MemberUpdateController {
-
-  @Autowired
-  MemberService memberService;
+  
+  @Autowired MemberService memberService;
 
   @RequestMapping("/member/update")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     Member member = new Member();
     member.setNo(Integer.parseInt(request.getParameter("no")));
@@ -30,17 +25,16 @@ public class MemberUpdateController {
     member.setTel(request.getParameter("tel"));
     Part photo = request.getPart("photo");
 
-    ServletContext sc = request.getServletContext();
-
     if (photo.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
-      String uploadDir = sc.getRealPath("/upload/member");
+      String uploadDir = request.getServletContext().getRealPath("/upload/member");
       photo.write(uploadDir + "/" + filename);
       member.setPhoto(filename);
     }
 
     if (memberService.update(member) == 0)
       throw new Exception("해당 번호의 회원이 없습니다.");
+      
     return "redirect:list";
   }
 }

@@ -9,16 +9,17 @@ import com.eomcs.lms.service.LessonService;
 
 @Controller
 public class LessonDeleteController {
-
-  @Autowired
-  LessonService lessonService;
+  
+  @Autowired LessonService lessonService;
 
   @RequestMapping("/lesson/delete")
-  public String excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
     int no = Integer.parseInt(request.getParameter("no"));
 
-    if (lessonService.delete(no) == 0)
+    if (lessonService.delete(no) == 0) 
       throw new Exception("해당 번호의 수업이 없습니다.");
+      
     return "redirect:list";
   }
 }

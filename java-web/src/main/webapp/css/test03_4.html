@@ -13,6 +13,9 @@
         대상자:상태명 {...}
         대상자[속성명] {...}
    */
+  div:first-child {
+    border: 1px dashed blue;
+  }
 
   li:first-child { /* 자식들 중에서 첫째인 li */
     background-color: gray;
@@ -33,9 +36,10 @@
   a:active {
     background-color: yellow;
   }
-  a:focus{
-    border:2px inset blue;
-    font-size: 20px;
+
+  a:focus {
+    border: 2px inset gray;
+    font-size: 150%;
   }
 
   input:focus { /* 키보드 입력을 받을 수 있는 상태 */
@@ -49,7 +53,7 @@
   </style>
 </head>
 <body>
-
+  <p>ok</p>
   <div id="menu">
   <img src='http://bitcamp.co.kr/resources/images/logo/head_logo.gif'>
   <ul>

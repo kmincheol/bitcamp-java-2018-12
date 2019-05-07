@@ -4,7 +4,7 @@
 <html>
 <head>
   <title>사진게시판 등록</title>
-    <jsp:include page="../commonCss.jsp" />
+  <jsp:include page="../commonCss.jsp"/>
 </head>
 <body>
 

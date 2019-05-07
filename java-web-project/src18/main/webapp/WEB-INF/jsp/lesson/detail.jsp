@@ -5,7 +5,7 @@
 <html>
 <head>
   <title>강의 상세조회</title>
-    <jsp:include page="../commonCss.jsp" />
+  <jsp:include page="../commonCss.jsp"/>
 </head>
 <body>
   <jsp:include page="../header.jsp" />

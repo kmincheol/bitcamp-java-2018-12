@@ -5,7 +5,7 @@
 <html>
 <head>
   <title>강의등록</title>
-    <jsp:include page="../commonCss.jsp" />
+  <jsp:include page="../commonCss.jsp"/>
 </head>
 <body>
 
@@ -67,7 +67,7 @@
     
   </div> <!-- .container -->
   
-  
+<jsp:include page="../javascript.jsp"/>
   
 </body>
 </html>
